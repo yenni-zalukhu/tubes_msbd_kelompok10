@@ -609,7 +609,7 @@ Version:1.0
 	float: left;
 }
 .header.shop .topbar {
-	background-color: #fff;
+	background-color: #F3EEEA;
 	border: none;
 }
 .header.shop.v3 .topbar{
@@ -738,7 +738,7 @@ Version:1.0
 }
 .header.shop .middle-inner {
 	padding: 20px 0;
-	background: #fff;
+	background: #F3EEEA;
 	border-top: 1px solid #eee;
 }
 .header.shop.v3 .middle-inner {
