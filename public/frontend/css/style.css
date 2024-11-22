@@ -35,6 +35,13 @@ Version:1.0
 20. 404 Error CSS
 21. Footer CSS
 ========================================*/
+
+#st-3 {
+	display: none;
+	visibility: hidden;
+}
+
+
 .color-plate {
 	position: fixed;
 	display: block;
@@ -411,10 +418,14 @@ Version:1.0
 	position: relative;
 	top: 1px;
 }
-.header.shop .list-main li:last-child{
-	padding-right:0;
-	border:none;
+.header.shop .list-main li:last-child {
+    padding-right: 0;
+    border: none;
+    position: relative;
+    left: 25px; /* Geser elemen ke kanan */
 }
+
+
 .header.shop .list-main li a{
 	color:#333;
 }
@@ -609,7 +620,7 @@ Version:1.0
 	float: left;
 }
 .header.shop .topbar {
-	background-color: #fff;
+	background-color: #F3EEEA;
 	border: none;
 }
 .header.shop.v3 .topbar{
@@ -737,8 +748,8 @@ Version:1.0
 	top: 0;
 }
 .header.shop .middle-inner {
-	padding: 20px 0;
-	background: #fff;
+	/* padding: 20px 0; */
+	background: #F3EEEA;
 	border-top: 1px solid #eee;
 }
 .header.shop.v3 .middle-inner {

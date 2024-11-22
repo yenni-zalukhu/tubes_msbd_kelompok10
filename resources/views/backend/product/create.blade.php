@@ -7,6 +7,7 @@
     <div class="card-body">
       <form method="post" action="{{route('product.store')}}">
         {{csrf_field()}}
+        
         <div class="form-group">
           <label for="inputTitle" class="col-form-label">Title <span class="text-danger">*</span></label>
           <input id="inputTitle" type="text" name="title" placeholder="Enter title"  value="{{old('title')}}" class="form-control">
