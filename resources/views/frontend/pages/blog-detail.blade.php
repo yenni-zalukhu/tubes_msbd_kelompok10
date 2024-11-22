@@ -79,7 +79,7 @@
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-12">
                                                     <div class="form-group">
-                                                        <label>Your Email<span>*</span></label>
+                                                        <label>E-mail Anda<span>*</span></label>
                                                         <input type="email" name="email" placeholder="" required="required">
                                                     </div>
                                                 </div> --}}
@@ -187,7 +187,7 @@
                                 <form action="{{route('subscribe')}}" method="POST">
                                     @csrf
                                     <div class="form-inner">
-                                        <input type="email" name="email" placeholder="Enter your email">
+                                        <input type="email" name="email" placeholder="Masukkan E-mail Anda">
                                         <button type="submit" class="btn mt-2">Submit</button>
                                     </div>
                                 </form>

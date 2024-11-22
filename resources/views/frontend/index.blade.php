@@ -131,10 +131,10 @@
                                             <div class="button-head">
                                                 <div class="product-action">
                                                     <a data-toggle="modal" data-target="#{{$product->id}}" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
-                                                    <a title="Wishlist" href="{{route('add-to-wishlist',$product->slug)}}" ><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
+                                                    <a title="Wishlist" href="{{route('add-to-wishlist',$product->slug)}}" ><i class=" ti-heart "></i><span>Tambahkan ke Wishlist</span></a>
                                                 </div>
                                                 <div class="product-action-2">
-                                                    <a title="Add to cart" href="{{route('add-to-cart',$product->slug)}}">Add to cart</a>
+                                                    <a title="Add to cart" href="{{route('add-to-cart',$product->slug)}}">Tambahkan ke keranjang</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -336,7 +336,7 @@
 </section>
 <!-- End Shop Blog  -->
 
-<!-- Start Shop Services Area -->
+<!-- Start Shop Services Area  -->
 <section class="shop-services section home">
     <div class="container">
         <div class="row">
@@ -344,8 +344,8 @@
                 <!-- Start Single Service -->
                 <div class="single-service">
                     <i class="ti-rocket"></i>
-                    <h4>Free shiping</h4>
-                    <p>Orders over $100</p>
+                    <h4>Gratis Ongkir</h4>
+                    <p>Pembelian diatas Rp100.000</p>
                 </div>
                 <!-- End Single Service -->
             </div>
@@ -353,8 +353,8 @@
                 <!-- Start Single Service -->
                 <div class="single-service">
                     <i class="ti-reload"></i>
-                    <h4>Free Return</h4>
-                    <p>Within 30 days returns</p>
+                    <h4>Pengembalian Gratis</h4>
+                    <p>Garansi Pengembalian</p>
                 </div>
                 <!-- End Single Service -->
             </div>
@@ -362,8 +362,8 @@
                 <!-- Start Single Service -->
                 <div class="single-service">
                     <i class="ti-lock"></i>
-                    <h4>Sucure Payment</h4>
-                    <p>100% secure payment</p>
+                    <h4>Pembayaran Aman</h4>
+                    <p>Platform Terpercaya</p>
                 </div>
                 <!-- End Single Service -->
             </div>
@@ -371,10 +371,11 @@
                 <!-- Start Single Service -->
                 <div class="single-service">
                     <i class="ti-tag"></i>
-                    <h4>Best Peice</h4>
-                    <p>Guaranteed price</p>
+                    <h4>Harga Termurah</h4>
+                    <p>Harga Dijamin Murah</p>
                 </div>
                 <!-- End Single Service -->
+
             </div>
         </div>
     </div>

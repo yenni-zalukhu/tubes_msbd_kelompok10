@@ -140,7 +140,7 @@
                                 <h4>Subscribe & get news <br> latest updates.</h4>
                                 <form method="POST" action="{{route('subscribe')}}" class="form-inner">
                                     @csrf
-                                    <input type="email" name="email" placeholder="Enter your email">
+                                    <input type="email" name="email" placeholder="Masukkan E-mail Anda">
                                     <button type="submit" class="btn " style="width: 100%">Submit</button>
                                 </form>
                             </div>
