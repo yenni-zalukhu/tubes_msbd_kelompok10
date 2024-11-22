@@ -21,11 +21,11 @@
                     <!-- Top Right -->
                     <div class="right-content">
                         <ul class="list-main">
-<<<<<<< HEAD
+
                         <li><i class="ti-location-pin"></i> <a href="{{route('order.track')}}">Lacak Pesanan</a></li>
-=======
+
                         {{-- <li><i class="ti-location-pin"></i> <a href="{{route('order.track')}}">Track Order</a></li> --}}
->>>>>>> 282f678dc04ff9afc78d2cec93dc8f00165ef1bf
+
                             {{-- <li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li> --}}
                             @auth 
                                 @if(Auth::user()->role=='admin')
