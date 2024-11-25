@@ -199,7 +199,7 @@
                                     </div>
                                 @endforeach
                             @else
-                                    <h4 class="text-warning" style="margin:100px auto;">There are no products.</h4>
+                                    
                             @endif
 
 
@@ -234,7 +234,7 @@
                                 <div class="row no-gutters">
                                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                                         <!-- Product Slider -->
-                                            <div class="product-gallery">
+                                            <div class="product-g    ery">
                                                 <div class="quickview-slider-active">
                                                     @php
                                                         $photo=explode(',',$product->photo);

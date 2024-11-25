@@ -21,6 +21,8 @@ class ProductController extends Controller
         $products=Product::getAllProduct();
         // return $products;
         return view('backend.product.index')->with('products',$products);
+
+        
     }
 
     /**

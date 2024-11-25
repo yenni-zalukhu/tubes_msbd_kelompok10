@@ -89,14 +89,23 @@
                                     // dd($categories);
                                 @endphp
                                 @if($categories)
-                                <button class="btn" style="background:black"data-filter="*">
+                                <button 
+                                class="custom-btn"
+                                onclick="window.location.href='{{ route('product-grids') }}';"
+                            >
+                                All Products
+                            </button>
+                            
+                            
+                                    @foreach($categories as $key=>$cat)
+                                    <button 
+                                    class="btn" 
+                                    style="background:black; color:white; padding:10px 20px; border:none; cursor:pointer;" 
+                                    onclick="window.location.href='{{ route('admin.products') }}';"
+                                >
                                     All Products
                                 </button>
-                                    @foreach($categories as $key=>$cat)
-
-                                    <button class="btn" style="background:none;color:black;"data-filter=".{{$cat->id}}">
-                                        {{$cat->title}}
-                                    </button>
+                                
                                     @endforeach
                                 @endif
                             </ul>

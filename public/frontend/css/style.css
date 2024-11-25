@@ -184,6 +184,27 @@ Version:1.0
 }
 /* End Preloader */
 
+.custom-btn {
+    background-color: #776B5D; /* Warna dasar tombol */
+    color: white; /* Warna teks */
+    padding: 10px 20px; /* Padding untuk ukuran tombol */
+    border: none; /* Hilangkan border default */
+    border-radius: 8px; /* Membuat border membulat */
+    cursor: pointer; /* Mengubah kursor menjadi pointer */
+    font-size: 16px; /* Ukuran teks */
+    text-align: center; /* Pusatkan teks */
+    transition: all 0.3s ease; /* Animasi transisi untuk efek hover */
+}
+
+/* Hover Effect */
+.custom-btn:hover {
+    background-color: #B0A695; /* Warna tombol saat hover */
+    color: #F3EEEA; /* Warna teks saat hover */
+    transform: scale(1.05); /* Efek sedikit memperbesar tombol saat hover */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Memberikan bayangan pada tombol */
+}
+
+
 .btn {
 	position: relative;
 	font-weight: 500;
@@ -253,6 +274,7 @@ Version:1.0
 .navbar-expand-lg .navbar-collapse{
 	display:block !important;
 }
+
 .header.v3 .navbar-expand-lg .navbar-collapse{
 	display:block !important;
 	background:#333;
@@ -414,7 +436,7 @@ Version:1.0
 	display: inline-block;
 	margin-right: 4px;
 	font-size: 15px;
-	color: #F7941D;
+	color: #776B5D;
 	position: relative;
 	top: 1px;
 }
@@ -427,11 +449,17 @@ Version:1.0
 
 
 .header.shop .list-main li a{
-	color:#333;
+	color:#776B5D;
+
 }
-.header.shop .list-main li a:hover{
-	color:#F7941D;
+.header.shop .list-main li a:hover {
+    color: #B0A695;
+    font-weight: bold;
+    font-size: 18px; /* Ganti 18px dengan ukuran yang Anda inginkan */
+    transition: font-size 0.3s ease; /* Menambahkan efek transisi */
 }
+
+
 .header.shop .nav li {
 	margin-right: 40px;
 	float: left;
@@ -445,7 +473,7 @@ Version:1.0
 	margin: 0 !important;
 }
 .header.shop .nav li .new {
-	background: #F7941D;
+	background: #B0A695;
 	color: #fff;
 	text-transform: uppercase;
 	font-size: 10px;
@@ -460,7 +488,7 @@ Version:1.0
 	content: "";
 	left: 4px;
 	bottom: -8px;
-	border: 4px solid #F7941D;
+	border: 4px solid #B0A695;
 	border-bottom-color: transparent;
 	border-left-color: transparent;
 	border-right-color: transparent;
@@ -519,7 +547,7 @@ Version:1.0
 	font-weight: 600;
 }
 .header .shopping .dropdown-cart-header a:hover{
-	color:#F7941D;
+	color:#B0A695;
 }
 .header .shopping-list li {
 	overflow: hidden;
@@ -576,7 +604,7 @@ Version:1.0
 	color: #333;
 }
 .header .shopping-list h4 a:hover{
-	color:#F7941D;
+	color:#B0A695;
 }
 .header .shopping-item .bottom {
 	text-align: center;
@@ -722,7 +750,7 @@ Version:1.0
 	text-align: center;
 	font-size: 18px;
 	color: #fff;
-	background: #333333;
+	background: #776B5D ;
 	position: absolute;
 	right: -2px;
 	top: -1px;
@@ -734,7 +762,7 @@ Version:1.0
 }
 .header.shop .search-bar .btnn:hover{
 	color:#fff;
-	background:#F7941D;
+	background:#B0A695;
 }
 /* Search Form */
 .header.shop .search-top {
@@ -755,16 +783,54 @@ Version:1.0
 .header.shop.v3 .middle-inner {
 	border:none;
 }
+
 .header.shop .header-inner {
-	background: #333;
+    background: #776B5D;
+    display: flex; /* Menggunakan Flexbox */
+    justify-content: center; /* Memusatkan elemen secara horizontal */
+    align-items: center; /* Memusatkan elemen secara vertikal */
+    text-align: center; /* Menjamin teks terpusat di dalam elemen */
+    height: 70px; /* Menyesuaikan tinggi header untuk memastikan posisi tengah */
 }
+
 .header.shop.v3 .header-inner {
-	background: transparent;
+    background: transparent;
+    display: flex; /* Flexbox juga digunakan di sini */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
+
 .header.shop.v2 .header-inner {
-	background: #fff;
-	border-top:1px solid #eee;
+    background: #fff;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
+
+/* Menambahkan jarak dan gaya untuk item menu */
+.nav.main-menu.menu.navbar-nav li {
+    list-style: none;
+    margin: 0 15px; /* Memberikan jarak antar item menu */
+}
+
+.nav.main-menu.menu.navbar-nav li a {
+    color: white; /* Warna teks */	
+    font-size: 16px; /* Ukuran teks */
+    font-weight: bold; /* Teks tebal */
+    text-decoration: none; /* Menghapus garis bawah */
+    padding: 10px 15px; /* Memberikan ruang tambahan di sekitar teks */
+    transition: all 0.3s ease; /* Efek transisi saat hover */
+}
+
+.nav.main-menu.menu.navbar-nav li a:hover {
+    color: #fff; /* Warna teks saat hover */
+    font-size: 18px; /* Efek memperbesar teks saat hover */
+	border-radius: 10px;
+}
+
 .header.shop .topbar p {
 	color: #333;
 }
@@ -938,7 +1004,7 @@ Version:1.0
 	margin-right:0;
 }
 .header.shop .nav li .new {
-	background: #F7941D;
+	background: #B0A695;
 	color: #fff;
 	text-transform: uppercase;
 	font-size: 9px;
@@ -968,7 +1034,7 @@ Version:1.0
 }
 .header.shop .nav li:hover a{
 	color:#fff;
-	background:#F7941D;
+	background:#B0A695;
 }
 .header.shop.v2 .nav li:hover a{
 	color:#F7941D;
@@ -976,7 +1042,8 @@ Version:1.0
 }
 .header.shop .nav li.active a{
 	color:#fff;
-	background:#F7941D;
+	background:#B0A695;
+	border-radius: 10px;
 }
 .header.shop.v2 .nav li.active a{
 	color:#333 !important;
@@ -989,7 +1056,7 @@ Version:1.0
 	margin:0;
 }
 .header.shop .nav li .dropdown li:hover a{
-	background:#F7941D;
+	background:#B0A695;
 }
 .header.shop.v2 .nav li.active .dropdown li a{
 	color:#333 !important;
@@ -1043,18 +1110,18 @@ Version:1.0
 	color:#F7941D;
 }
 .header.shop .right-bar .sinlge-bar .single-icon{
-	color:#333;
+	color:#776B5D;
 	font-size:20px;
 	position:relative;
 }
 .header.shop .right-bar .sinlge-bar .single-icon:hover{
-	color:#F7941D;
+	color:#B0A695;
 }
 .header.shop .right-bar .sinlge-bar .single-icon .total-count {
 	position: absolute;
 	top: -7px;
 	right: -8px;
-	background: #f6931d;
+	background: #776B5D;
 	width: 18px;
 	height: 18px;
 	line-height: 18px;
@@ -3375,9 +3442,99 @@ Version:1.0
 /*======================================
    Login & Register CSS
 ========================================*/
-.shop.login {
-	padding: 100px 0;
+h2 {
+    position: relative;
+    color: #fff; /* Warna teks putih */
+    text-align: center;
+    border-bottom: none !important; /* Hapus garis bawaan */
+    margin-bottom: 20px; /* Atur jarak bawah jika diperlukan */
 }
+
+h2::after {
+    content: ''; /* Tambahkan garis */
+    display: block;
+    margin: 8px auto 0; /* Atur jarak dari teks */
+    width: 50px; /* Panjang garis */
+    height: 2px; /* Ketebalan garis */
+	background-color: #776B5D !important;
+	margin: 20px auto 0 !important;
+}
+
+/* Pastikan tidak ada elemen tambahan */
+h2::before {
+    content: none !important; /* Hapus elemen sebelum */
+}
+
+p {
+    position: relative;
+    top: -10px; /* Nilai negatif untuk menggeser ke atas */
+}
+
+input {
+    border-radius: 10px !important; /* Mengatur sudut melengkung */
+    padding: 10px; /* Memberikan padding untuk kenyamanan */
+    border: 1px solid #B0A695; /* Warna border */
+    background-color: #f8f8f8; /* Warna background */
+    transition: border 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Efek transisi */
+}
+
+input:focus {
+    outline: none; /* Menghapus outline bawaan */
+    border: 1px solid #776B5D; /* Border ketika fokus */
+    box-shadow: 0 0 5px #776B5D; /* Efek glow ketika fokus */
+    border-radius: 10px !important; /* Tetap mempertahankan lengkungan */
+    background-color: #ffffff; /* Background berubah ketika fokus */
+}
+
+.register-btn {
+	background-color: #776B5D;
+	color: white;
+	border: 2px solid #776B5D;
+	border-radius: 8px;
+	padding: 10px 20px;
+	cursor: pointer;
+	display: inline-block;
+	transition: all 0.3s ease;
+	width: 100px;
+	margin-left: -15px;
+	margin-top: 25px;
+}
+
+/* Efek hover pada tombol */
+.register-btn:hover {
+	background-color: #B0A695 !important;
+	border-color: #B0A695;
+}
+
+/* Memusatkan tombol di dalam form-group */
+.form-group.login-btn {
+	text-align: center;
+}	
+
+
+
+.lost-pass {
+    display: block; /* Membuatnya sebagai blok untuk kontrol posisi */
+    text-align: center; /* Mengatur teks agar berada di tengah */
+    margin: 20px auto; /* Memberikan jarak atas/bawah dan tengah horizontal */
+    color: #776B5D; /* Warna teks */
+    text-decoration: none; /* Menghilangkan garis bawah */
+    font-size: 14px; /* Menyesuaikan ukuran teks */
+}
+
+.lost-pass:hover {
+    text-decoration: underline; /* Memberikan efek garis bawah saat dihover */
+    color: #B0A695; /* Mengubah warna saat hover */
+}
+
+
+
+.shop.login.section {
+    background-color: #F3EEEA; /* Ubah background menjadi warna F3EEEA */
+    padding: 50px 0; /* Tambahkan padding jika diperlukan */
+    border-radius: 5px; /* Opsional, tambahkan border-radius jika ingin sudut melengkung */
+}
+
 .shop.login .login-form h2 {
 	position:relative;
 	font-size: 35px;
@@ -3510,13 +3667,13 @@ Version:1.0
 }
 .shop.login .login-form .lost-pass{
 	display:inline-block;
-	margin-left:25px;
+	margin-left:70px;
 	color:#333;
 	font-size:14px;
 	font-weight:400;
 }
 .shop.login .login-form .lost-pass:hover{
-	color:#F7941D;
+	color:#776B5D;
 }
 /*======================================
 	End Login CSS
