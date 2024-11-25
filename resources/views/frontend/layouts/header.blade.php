@@ -22,7 +22,7 @@
                     <div class="right-content">
                         <ul class="list-main">
 
-                        <li><i class="ti-location-pin"></i> <a href="{{route('order.track')}}">Lacak Pesanan</a></li>
+                        {{-- <li><i class="ti-location-pin"></i> <a href="{{route('order.track')}}">Lacak Pesanan</a></li> --}}
 
                         {{-- <li><i class="ti-location-pin"></i> <a href="{{route('order.track')}}">Track Order</a></li> --}}
 
