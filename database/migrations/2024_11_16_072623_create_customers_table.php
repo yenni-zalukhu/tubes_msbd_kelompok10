@@ -9,7 +9,7 @@ class CreateCustomersTable extends Migration
     public function up()
     {
         Schema::create('customers', function (Blueprint $table) {
-            $table->increments('customer_id'); // Primary Key
+            $table->unsignedBigInteger('customer_id'); // Primary Key
             $table->string('name', 255); // Nama pelanggan
             $table->string('phone', 20); // Nomor telepon
             $table->string('email', 255); // Email

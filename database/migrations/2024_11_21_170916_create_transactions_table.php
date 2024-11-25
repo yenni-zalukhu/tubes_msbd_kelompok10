@@ -13,6 +13,7 @@ class CreateTransactionsTable extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('transactions')) { // Tambahkan validasi ini
         Schema::create('transactions', function (Blueprint $table) {
             $table->id('transaction_id'); // Kolom transaction_id sebagai primary key dan auto-increment
             $table->unsignedBigInteger('customer_id'); // Kolom customer_id sebagai foreign key
@@ -26,6 +27,7 @@ class CreateTransactionsTable extends Migration
             $table->timestamps(); // Kolom created_at dan updated_at
         });
     }
+}
 
     /**
      * Reverse the migrations.
