@@ -15,7 +15,9 @@
     use App\Http\Controllers\PayPalController;
     use App\Http\Controllers\NotificationController;
     use App\Http\Controllers\HomeController;
-    use \UniSharp\LaravelFilemanager\Lfm;
+use App\Http\Controllers\KasirController;
+use App\Http\Middleware\Kasir;
+use \UniSharp\LaravelFilemanager\Lfm;
 
     /*
     |--------------------------------------------------------------------------
@@ -31,7 +33,7 @@
     // CACHE CLEAR ROUTE
     Route::get('cache-clear', function () {
         Artisan::call('optimize:clear');
-        request()->session()->flash('success', 'Successfully cache cleared.');
+        session()->flash('success', 'Cache successfully cleared.');
         return redirect()->back();
     })->name('cache.clear');
 
@@ -45,6 +47,10 @@
     Route::get('user/login', [FrontendController::class, 'login'])->name('login.form');
     Route::post('user/login', [FrontendController::class, 'loginSubmit'])->name('login.submit');
     Route::get('user/logout', [FrontendController::class, 'logout'])->name('user.logout');
+
+    Route::get('kasir/login', [FrontendController::class, 'logink'])->name('logink.form');
+    Route::post('kasir/login', [FrontendController::class, 'loginSubmitk'])->name('logink.submit');
+    Route::get('kasir/logout', [FrontendController::class, 'logout'])->name('user.logout');
 
     Route::get('user/register', [FrontendController::class, 'register'])->name('register.form');
     Route::post('user/register', [FrontendController::class, 'registerSubmit'])->name('register.submit');
@@ -200,8 +206,56 @@
 
     Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
         Lfm::routes();
-
     });
 
 
 
+      Route::get('/kasir', [FrontendController::class, 'indexk']);
+    Route::group(['prefix' => '/kasir', 'middleware' => ['auth', 'kasir']], function () {
+        Route::get('/', [KasirController::class, 'index'])->name('kasir');
+        Route::get('/file-manager', function () {
+            return view('backend.layouts.file-manager');
+        })->name('file-manager');
+
+        Route::resource('users', 'UsersController');
+        // Banner
+        Route::resource('banner', 'BannerController');
+        // Brand
+        Route::resource('brand', 'BrandController');
+        // Profile
+        Route::get('/profile', [KasirController::class, 'profile'])->name('admin-profile');
+        Route::post('/profile/{id}', [KasirController::class, 'profileUpdate'])->name('profile-update');
+        // Category
+        Route::resource('/category', 'CategoryController');
+        // Product
+        Route::resource('/product', 'ProductController');
+        // Ajax for sub category
+        Route::post('/category/{id}/child', 'CategoryController@getChildByParent');
+        // POST category
+        Route::resource('/post-category', 'PostCategoryController');
+        // Post tag
+        Route::resource('/post-tag', 'PostTagController');
+        // Post
+        Route::resource('/post', 'PostController');
+        // Message
+        Route::resource('/message', 'MessageController');
+        Route::get('/message/five', [MessageController::class, 'messageFive'])->name('messages.five');
+
+        // Order
+        Route::resource('/order', 'OrderController');
+        // Shipping
+        Route::resource('/shipping', 'ShippingController');
+        // Coupon
+        Route::resource('/coupon', 'CouponController');
+        // Settings
+        Route::get('settings', [KasirController::class, 'settings'])->name('settings');
+        Route::post('setting/update', [KasirController::class, 'settingsUpdate'])->name('settings.update');
+
+        // Notification
+        Route::get('/notification/{id}', [NotificationController::class, 'show'])->name('admin.notification');
+        Route::get('/notifications', [NotificationController::class, 'index'])->name('all.notification');
+        Route::delete('/notification/{id}', [NotificationController::class, 'delete'])->name('notification.delete');
+        // Password Change
+        Route::get('change-password', [KasirController::class, 'changePassword'])->name('change.password.form');
+        Route::post('change-password', [KasirController::class, 'changPasswordStore'])->name('change.password');
+    });

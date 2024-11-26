@@ -1,22 +1,43 @@
   <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('admin')}}">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">Admin</div>
-      </a>
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route(Auth::user()->role === 'admin' ? 'admin' : 'kasir')}}">
+    <div class="sidebar-brand-icon rotate-n-15">
+        <i class="fas fa-laugh-wink"></i>
+    </div>
+    <div class="sidebar-brand-text mx-3">
+        @if(Auth::user()->role === 'admin')
+            Admin
+        @elseif(Auth::user()->role === 'kasir')
+            Kasir
+        @endif
+    </div>
+</a>
 
-      <!-- Divider -->
-      <hr class="sidebar-divider my-0">
 
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
-        <a class="nav-link" href="{{route('admin')}}">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
-      </li>
+         <!-- Divider -->
+<!-- Divider -->
+<hr class="sidebar-divider my-0">
+
+<!-- Nav Item - Dashboard -->
+<li class="nav-item active">
+    @if(Auth::check() && Auth::user()->role === 'admin')
+        <a class="nav-link" href="{{ route('admin') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard Admin</span>
+        </a>
+    @elseif(Auth::check() && Auth::user()->role === 'kasir')
+        <a class="nav-link" href="{{ route('kasir') }}">
+            <i class="fas fa-fw fa-cash-register"></i>
+            <span>Dashboard Kasir</span>
+        </a>
+    @else
+        <a class="nav-link" href="#">
+            <i class="fas fa-fw fa-exclamation-circle"></i>
+            <span>Unauthorized</span>
+        </a>
+    @endif
+</li>
 
       <!-- Divider -->
       <hr class="sidebar-divider">
