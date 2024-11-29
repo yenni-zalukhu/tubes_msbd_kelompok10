@@ -57,6 +57,7 @@
                 <option value="">-----Select Role-----</option>
                 @foreach($roles as $role)
                     <option value="{{$role->role}}" {{(($role->role=='admin') ? 'selected' : '')}}>Admin</option>
+                    {{-- <option value="{{$role->role}}" {{(($role->role=='kasir') ? 'selected' : '')}}>Kasir</option> --}}
                     <option value="{{$role->role}}" {{(($role->role=='user') ? 'selected' : '')}}>User</option>
                 @endforeach
             </select>

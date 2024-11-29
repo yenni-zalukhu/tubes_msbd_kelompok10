@@ -17,7 +17,7 @@ class CreateAdminsTable extends Migration
             $table->id('admin_id'); // Kolom admin_id sebagai primary key dengan auto-increment
             $table->string('username', 50); // Kolom username dengan panjang maksimal 50 karakter
             $table->string('password_hash', 255); // Kolom password_hash untuk menyimpan hash password
-            $table->enum('role', ['Admin', 'Cashier']); // Kolom role dengan enum 'Admin' dan 'Cashier'
+            $table->enum('role', ['Admin', 'kasir']); // Kolom role dengan enum 'Admin' dan 'Cashier'
             $table->timestamps(); // Kolom created_at dan updated_at
         });
     }

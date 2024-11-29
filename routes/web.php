@@ -1,21 +1,24 @@
     <?php
 
-        use Illuminate\Support\Facades\Route;
-        use Illuminate\Support\Facades\Artisan;
-        use App\Http\Controllers\AdminController;
-        use App\Http\Controllers\FrontendController;
-        use App\Http\Controllers\Auth\LoginController;
-        use App\Http\Controllers\MessageController;
-        use App\Http\Controllers\CartController;
-        use App\Http\Controllers\WishlistController;
-        use App\Http\Controllers\OrderController;
-        use App\Http\Controllers\ProductReviewController;
-        use App\Http\Controllers\PostCommentController;
-        use App\Http\Controllers\CouponController;
-        use App\Http\Controllers\PayPalController;
-        use App\Http\Controllers\NotificationController;
-        use App\Http\Controllers\HomeController;
-        use \UniSharp\LaravelFilemanager\Lfm;
+    use Illuminate\Support\Facades\Route;
+    use Illuminate\Support\Facades\Artisan;
+    use App\Http\Controllers\AdminController;
+    use App\Http\Controllers\FrontendController;
+    use App\Http\Controllers\Auth\LoginController;
+    use App\Http\Controllers\MessageController;
+    use App\Http\Controllers\CartController;
+    use App\Http\Controllers\WishlistController;
+    use App\Http\Controllers\OrderController;
+    use App\Http\Controllers\ProductReviewController;
+    use App\Http\Controllers\PostCommentController;
+    use App\Http\Controllers\CouponController;
+    use App\Http\Controllers\PayPalController;
+    use App\Http\Controllers\NotificationController;
+    use App\Http\Controllers\HomeController;
+use App\Http\Controllers\KasirController;
+use App\Http\Middleware\Kasir;
+use \UniSharp\LaravelFilemanager\Lfm;
+
 
         /*
         |--------------------------------------------------------------------------
@@ -28,12 +31,14 @@
         |
         */
 
-        // CACHE CLEAR ROUTE
-        Route::get('cache-clear', function () {
-            Artisan::call('optimize:clear');
-            request()->session()->flash('success', 'Successfully cache cleared.');
-            return redirect()->back();
-        })->name('cache.clear');
+
+    // CACHE CLEAR ROUTE
+    Route::get('cache-clear', function () {
+        Artisan::call('optimize:clear');
+        session()->flash('success', 'Cache successfully cleared.');
+        return redirect()->back();
+    })->name('cache.clear');
+
 
 
         // STORAGE LINKED ROUTE
@@ -46,13 +51,19 @@
         Route::post('user/login', [FrontendController::class, 'loginSubmit'])->name('login.submit');
         Route::get('user/logout', [FrontendController::class, 'logout'])->name('user.logout');
 
-        Route::get('user/register', [FrontendController::class, 'register'])->name('register.form');
-        Route::post('user/register', [FrontendController::class, 'registerSubmit'])->name('register.submit');
-    // Reset password
-        Route::post('password-reset', [FrontendController::class, 'showResetForm'])->name('password.reset');
-    // Socialite
-        Route::get('login/{provider}/', [LoginController::class, 'redirect'])->name('login.redirect');
-        Route::get('login/{provider}/callback/', [LoginController::class, 'Callback'])->name('login.callback');
+
+    Route::get('kasir/login', [FrontendController::class, 'logink'])->name('logink.form');
+    Route::post('kasir/login', [FrontendController::class, 'loginSubmitk'])->name('logink.submit');
+    Route::get('kasir/logout', [FrontendController::class, 'logout'])->name('user.logout');
+
+    Route::get('user/register', [FrontendController::class, 'register'])->name('register.form');
+    Route::post('user/register', [FrontendController::class, 'registerSubmit'])->name('register.submit');
+// Reset password
+Route::post('password/reset', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+// Socialite
+    Route::get('login/{provider}/', [LoginController::class, 'redirect'])->name('login.redirect');
+    Route::get('login/{provider}/callback/', [LoginController::class, 'Callback'])->name('login.callback');
+
 
         Route::get('/', [FrontendController::class, 'home'])->name('home');
 
@@ -120,35 +131,37 @@
 
     // Backend section start
 
-        Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function () {
-            Route::get('/', [AdminController::class, 'index'])->name('admin');
-            Route::get('/file-manager', function () {
-                return view('backend.layouts.file-manager');
-            })->name('file-manager');
-            // user route
-            Route::resource('users', 'UsersController');
-            // Banner
-            Route::resource('banner', 'BannerController');
-            // Brand
-            Route::resource('brand', 'BrandController');
-            // Profile
-            Route::get('/profile', [AdminController::class, 'profile'])->name('admin-profile');
-            Route::post('/profile/{id}', [AdminController::class, 'profileUpdate'])->name('profile-update');
-            // Category
-            Route::resource('/category', 'CategoryController');
-            // Product
-            Route::resource('/product', 'ProductController');
-            // Ajax for sub category
-            Route::post('/category/{id}/child', 'CategoryController@getChildByParent');
-            // POST category
-            Route::resource('/post-category', 'PostCategoryController');
-            // Post tag
-            Route::resource('/post-tag', 'PostTagController');
-            // Post
-            Route::resource('/post', 'PostController');
-            // Message
-            Route::resource('/message', 'MessageController');
-            Route::get('/message/five', [MessageController::class, 'messageFive'])->name('messages.five');
+
+Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function () {
+    Route::get('/', [AdminController::class, 'index'])->name('admin');
+    Route::get('/file-manager', function () {
+        return view('backend.layouts.file-manager');
+    })->name('file-manager');
+    // user route
+    Route::resource('users', 'UsersController');
+        // Banner
+        Route::resource('banner', 'BannerController');
+        // Brand
+        Route::resource('brand', 'BrandController');
+        // Profile
+        Route::get('/profile', [AdminController::class, 'profile'])->name('admin-profile');
+        Route::post('/profile/{id}', [AdminController::class, 'profileUpdate'])->name('profile-update');
+        // Category
+        Route::resource('/category', 'CategoryController');
+        // Product
+        Route::resource('/product', 'ProductController');
+        // Ajax for sub category
+        Route::post('/category/{id}/child', 'CategoryController@getChildByParent');
+        // POST category
+        Route::resource('/post-category', 'PostCategoryController');
+        // Post tag
+        Route::resource('/post-tag', 'PostTagController');
+        // Post
+        Route::resource('/post', 'PostController');
+        // Message
+        Route::resource('/message', 'MessageController');
+        Route::get('/message/five', [MessageController::class, 'messageFive'])->name('messages.five');
+
 
             // Order
             Route::resource('/order', 'OrderController');
@@ -198,10 +211,62 @@
 
         });
 
-        Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
-            Lfm::routes();
 
-        });
+    Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+        Lfm::routes();
+    });
 
 
 
+
+    //   Route::get('/kasir', [FrontendController::class, 'indexk']);
+    // Route::group(['prefix' => '/kasir', 'middleware' => ['auth', 'kasir']], function () {
+    //     Route::get('/', [KasirController::class, 'index'])->name('kasir');
+    //     Route::get('/file-manager', function () {
+    //         return view('backend.layouts.file-manager');
+    //     })->name('file-manager');
+
+    //     // Route::resource('users', 'UsersController');
+    //     // // Banner
+    //     Route::resource('banner', 'BannerController');
+    //     // Brand
+    //     Route::resource('brand', 'BrandController');
+    //     // Profile
+    //     Route::get('/profile', [KasirController::class, 'profile'])->name('admin-profile');
+    //     Route::post('/profile/{id}', [KasirController::class, 'profileUpdate'])->name('profile-update');
+    //     // Category
+    //     Route::resource('/category', 'CategoryController');
+    //     // Product
+    //     Route::resource('/product', 'ProductController');
+    //     // Ajax for sub category
+    //     Route::post('/category/{id}/child', 'CategoryController@getChildByParent');
+    //     // POST category
+    //     Route::resource('/post-category', 'PostCategoryController');
+    //     // Post tag
+    //     Route::resource('/post-tag', 'PostTagController');
+    //     // Post
+    //     Route::resource('/post', 'PostController');
+    //     // Message
+    //     Route::resource('/message', 'MessageController');
+    //     Route::get('/message/five', [MessageController::class, 'messageFive'])->name('messages.five');
+
+    //     // Order
+    //     Route::resource('/order', 'OrderController');
+    //     // Shipping
+    //     Route::resource('/shipping', 'ShippingController');
+    //     // Coupon
+    //     Route::resource('/coupon', 'CouponController');
+    //     // Settings
+    //     Route::get('settings', [KasirController::class, 'settings'])->name('settings');
+    //     Route::post('setting/update', [KasirController::class, 'settingsUpdate'])->name('settings.update');
+
+    //     // Notification
+    //     Route::get('/notification/{id}', [NotificationController::class, 'show'])->name('admin.notification');
+    //     Route::get('/notifications', [NotificationController::class, 'index'])->name('all.notification');
+    //     Route::delete('/notification/{id}', [NotificationController::class, 'delete'])->name('notification.delete');
+    //     // Password Change
+    //     Route::get('change-password', [KasirController::class, 'changePassword'])->name('change.password.form');
+    //     Route::post('change-password', [KasirController::class, 'changPasswordStore'])->name('change.password');
+    //     Route::post('kasir/password/reset', [PasswordController::class, 'reset'])->name('kasir.password.reset');
+
+    // });

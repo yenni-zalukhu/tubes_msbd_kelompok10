@@ -11,8 +11,7 @@ use Carbon\Carbon;
 use Spatie\Activitylog\Models\Activity;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
-
-class AdminController extends Controller
+class KasirController extends Controller
 {
     public function index(){
         $data = User::select(\DB::raw("COUNT(*) as count"), \DB::raw("DAYNAME(created_at) as day_name"), \DB::raw("DAY(created_at) as day"))
@@ -26,7 +25,7 @@ class AdminController extends Controller
        $array[++$key] = [$value->day_name, $value->count];
      }
     //  return $data;
-     return view('backend.index')->with('users', json_encode($array));
+     return view('kasir.index')->with('users', json_encode($array));
     }
 
     public function profile(){
