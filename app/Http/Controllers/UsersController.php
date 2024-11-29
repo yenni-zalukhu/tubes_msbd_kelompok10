@@ -41,7 +41,7 @@ class UsersController extends Controller
             'name'=>'string|required|max:30',
             'email'=>'string|required|unique:users',
             'password'=>'string|required',
-            'role'=>'required|in:admin,user',
+            'role'=>'required|in:admin, user, kasir',
             'status'=>'required|in:active,inactive',
             'photo'=>'nullable|string',
         ]);
@@ -98,7 +98,7 @@ class UsersController extends Controller
         [
             'name'=>'string|required|max:30',
             'email'=>'string|required',
-            'role'=>'required|in:admin,user',
+            'role'=>'required|in:admin, user, kasir',
             'status'=>'required|in:active,inactive',
             'photo'=>'nullable|string',
         ]);
