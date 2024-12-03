@@ -68,14 +68,14 @@
                         <span class="text-danger">{{$message}}</span>
                         @enderror
                       </div>
-                      <div class="form-group">
-                          <label for="role" class="col-form-label">Role</label>
-                          <select name="role" class="form-control">
-                              <option value="">-----Select Role-----</option>
-                              <option value="{{$role->role}}" {{(($role->role=='admin') ? 'selected' : '')}}>Admin</option>
-                              <option value="{{$role->role}}" {{(($role->role=='kasir') ? 'selected' : '')}}>Kasir</option>
-                              <option value="{{$role->role}}" {{(($role->role=='user') ? 'selected' : '')}}>User</option>
-                          </select>
+                        <div class="form-group">
+                            <label for="role" class="col-form-label">Role</label>
+                            <select name="role" class="form-control">
+                                <option value="">-----Select Role-----</option>
+                                <option value="{{$role->role}}" {{(($role->role=='admin') ? 'selected' : '')}}>Admin</option>
+                                {{-- <option value="{{$role->role}}" {{(($role->role=='kasir') ? 'selected' : '')}}>Kasir</option> --}}
+                                <option value="{{$role->role}}" {{(($role->role=='user') ? 'selected' : '')}}>User</option>
+                            </select>
                         @error('role')
                         <span class="text-danger">{{$message}}</span>
                         @enderror
