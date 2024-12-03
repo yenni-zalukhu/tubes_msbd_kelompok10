@@ -48,7 +48,7 @@
           @enderror
         </div>
         @php 
-        $roles=DB::table('users')->select('role')->where('id',$user->id)->get();
+        $roles =DB::table('users')->select('role')->where('id',$user->id)->get();
         // dd($roles);
         @endphp
         <div class="form-group">

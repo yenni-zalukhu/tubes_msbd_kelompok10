@@ -26,13 +26,13 @@ class UsersTableSeeder extends Seeder
                 'role'=>'user',
                 'status'=>'active'
             ),
-            array(
-                'name'=>'kasir',
-                'email'=>'kasir@gmail.com',
-                'password'=>Hash::make('1111'),
-                'role'=>'kasir',
-                'status'=>'active'
-            ),
+            // array(
+            //     'name'=>'kasir',
+            //     'email'=>'kasir@gmail.com',
+            //     'password'=>Hash::make('1111'),
+            //     'role'=>'kasir',
+            //     'status'=>'active'
+            // ),
         );
 
         DB::table('users')->insert($data);

@@ -584,7 +584,7 @@ CREATE TABLE `users` (
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `photo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `role` enum('admin','user', 'kasir') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'user',
+  `role` enum('admin','user') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'user',
   `provider` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `provider_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` enum('active','inactive') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',

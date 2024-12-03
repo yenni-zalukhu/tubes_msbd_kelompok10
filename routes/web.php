@@ -210,54 +210,54 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
 
 
 
-    //   Route::get('/kasir', [FrontendController::class, 'indexk']);
-    // Route::group(['prefix' => '/kasir', 'middleware' => ['auth', 'kasir']], function () {
-    //     Route::get('/', [KasirController::class, 'index'])->name('kasir');
-    //     Route::get('/file-manager', function () {
-    //         return view('backend.layouts.file-manager');
-    //     })->name('file-manager');
+      Route::get('/kasir', [FrontendController::class, 'indexk']);
+    Route::group(['prefix' => '/kasir', 'middleware' => ['auth', 'kasir']], function () {
+        Route::get('/', [KasirController::class, 'index'])->name('kasir');
+        Route::get('/file-manager', function () {
+            return view('backend.layouts.file-manager');
+        })->name('file-manager');
 
-    //     // Route::resource('users', 'UsersController');
-    //     // // Banner
-    //     Route::resource('banner', 'BannerController');
-    //     // Brand
-    //     Route::resource('brand', 'BrandController');
-    //     // Profile
-    //     Route::get('/profile', [KasirController::class, 'profile'])->name('admin-profile');
-    //     Route::post('/profile/{id}', [KasirController::class, 'profileUpdate'])->name('profile-update');
-    //     // Category
-    //     Route::resource('/category', 'CategoryController');
-    //     // Product
-    //     Route::resource('/product', 'ProductController');
-    //     // Ajax for sub category
-    //     Route::post('/category/{id}/child', 'CategoryController@getChildByParent');
-    //     // POST category
-    //     Route::resource('/post-category', 'PostCategoryController');
-    //     // Post tag
-    //     Route::resource('/post-tag', 'PostTagController');
-    //     // Post
-    //     Route::resource('/post', 'PostController');
-    //     // Message
-    //     Route::resource('/message', 'MessageController');
-    //     Route::get('/message/five', [MessageController::class, 'messageFive'])->name('messages.five');
+        // Route::resource('users', 'UsersController');
+        // // Banner
+        Route::resource('banner', 'BannerController');
+        // Brand
+        Route::resource('brand', 'BrandController');
+        // Profile
+        Route::get('/profile', [KasirController::class, 'profile'])->name('admin-profile');
+        Route::post('/profile/{id}', [KasirController::class, 'profileUpdate'])->name('profile-update');
+        // Category
+        Route::resource('/category', 'CategoryController');
+        // Product
+        Route::resource('/product', 'ProductController');
+        // Ajax for sub category
+        Route::post('/category/{id}/child', 'CategoryController@getChildByParent');
+        // POST category
+        Route::resource('/post-category', 'PostCategoryController');
+        // Post tag
+        Route::resource('/post-tag', 'PostTagController');
+        // Post
+        Route::resource('/post', 'PostController');
+        // Message
+        Route::resource('/message', 'MessageController');
+        Route::get('/message/five', [MessageController::class, 'messageFive'])->name('messages.five');
 
-    //     // Order
-    //     Route::resource('/order', 'OrderController');
-    //     // Shipping
-    //     Route::resource('/shipping', 'ShippingController');
-    //     // Coupon
-    //     Route::resource('/coupon', 'CouponController');
-    //     // Settings
-    //     Route::get('settings', [KasirController::class, 'settings'])->name('settings');
-    //     Route::post('setting/update', [KasirController::class, 'settingsUpdate'])->name('settings.update');
+        // Order
+        Route::resource('/order', 'OrderController');
+        // Shipping
+        Route::resource('/shipping', 'ShippingController');
+        // Coupon
+        Route::resource('/coupon', 'CouponController');
+        // Settings
+        Route::get('settings', [KasirController::class, 'settings'])->name('settings');
+        Route::post('setting/update', [KasirController::class, 'settingsUpdate'])->name('settings.update');
 
-    //     // Notification
-    //     Route::get('/notification/{id}', [NotificationController::class, 'show'])->name('admin.notification');
-    //     Route::get('/notifications', [NotificationController::class, 'index'])->name('all.notification');
-    //     Route::delete('/notification/{id}', [NotificationController::class, 'delete'])->name('notification.delete');
-    //     // Password Change
-    //     Route::get('change-password', [KasirController::class, 'changePassword'])->name('change.password.form');
-    //     Route::post('change-password', [KasirController::class, 'changPasswordStore'])->name('change.password');
-    //     Route::post('kasir/password/reset', [PasswordController::class, 'reset'])->name('kasir.password.reset');
+        // Notification
+        Route::get('/notification/{id}', [NotificationController::class, 'show'])->name('admin.notification');
+        Route::get('/notifications', [NotificationController::class, 'index'])->name('all.notification');
+        Route::delete('/notification/{id}', [NotificationController::class, 'delete'])->name('notification.delete');
+        // Password Change
+        Route::get('change-password', [KasirController::class, 'changePassword'])->name('change.password.form');
+        Route::post('change-password', [KasirController::class, 'changPasswordStore'])->name('change.password');
+        Route::post('kasir/password/reset', [PasswordController::class, 'reset'])->name('kasir.password.reset');
 
-    // });
+    });
