@@ -24,9 +24,7 @@ class FrontendController extends Controller
         return redirect()->route($request->user()->role);
     }
 
-    public function indexk(Request $request){
-        return redirect()->route($request->user()->role);
-    }
+
 
     public function home(){
         $featured=Product::where('status','active')->where('is_featured',1)->orderBy('price','DESC')->limit(2)->get();
@@ -354,22 +352,6 @@ class FrontendController extends Controller
         return view('frontend.pages.login');
     }
 
-    public function logink(){
-        return view('frontend.pages.logink');
-    }
-
-    public function loginSubmitk(Request $request){
-        $data= $request->all();
-        if(Auth::attempt(['email' => $data['email'], 'password' => $data['password'],'status'=>'active'])){
-            Session::put('kasir',$data['email']);
-            request()->session()->flash('success','Successfully login');
-            return redirect()->route('kasir');
-        }
-        else{
-            request()->session()->flash('error','Invalid email and password pleas try again!');
-            return redirect()->back();
-        }
-    }
 
     public function loginSubmit(Request $request){
         $data= $request->all();
