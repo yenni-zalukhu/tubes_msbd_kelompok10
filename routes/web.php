@@ -1,4 +1,4 @@
-    <?php
+<?php
 
     use Illuminate\Support\Facades\Route;
     use Illuminate\Support\Facades\Artisan;
@@ -138,13 +138,14 @@ Route::post('password/reset', [ResetPasswordController::class, 'showResetForm'])
     // Backend section start
 
 
-Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function () {
-    Route::get('/', [AdminController::class, 'index'])->name('admin');
-    Route::get('/file-manager', function () {
-        return view('backend.layouts.file-manager');
-    })->name('file-manager');
-    // user route
-    Route::resource('users', 'UsersController');
+
+    Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function () {
+        Route::get('/', [AdminController::class, 'index'])->name('admin');
+        Route::get('/file-manager', function () {
+            return view('backend.layouts.file-manager');
+        })->name('file-manager');
+        // user route
+        Route::resource('users', 'UsersController');
         // Banner
         Route::resource('banner', 'BannerController');
         // Brand
@@ -168,16 +169,15 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
         Route::resource('/message', 'MessageController');
         Route::get('/message/five', [MessageController::class, 'messageFive'])->name('messages.five');
 
-
-            // Order
-            Route::resource('/order', 'OrderController');
-            // Shipping
-            Route::resource('/shipping', 'ShippingController');
-            // Coupon
-            Route::resource('/coupon', 'CouponController');
-            // Settings
-            Route::get('settings', [AdminController::class, 'settings'])->name('settings');
-            Route::post('setting/update', [AdminController::class, 'settingsUpdate'])->name('settings.update');
+        // Order
+        Route::resource('/order', 'OrderController');
+        // Shipping
+        Route::resource('/shipping', 'ShippingController');
+        // Coupon
+        Route::resource('/coupon', 'CouponController');
+        // Settings
+        Route::get('settings', [AdminController::class, 'settings'])->name('settings');
+        Route::post('setting/update', [AdminController::class, 'settingsUpdate'])->name('settings.update');
 
             // Notification
             Route::get('/notification/{id}', [NotificationController::class, 'show'])->name('admin.notification');
@@ -224,12 +224,13 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
 
 
 
-    //   Route::get('/kasir', [FrontendController::class, 'indexk']);
-    // Route::group(['prefix' => '/kasir', 'middleware' => ['auth', 'kasir']], function () {
-    //     Route::get('/', [KasirController::class, 'index'])->name('kasir');
-    //     Route::get('/file-manager', function () {
-    //         return view('backend.layouts.file-manager');
-    //     })->name('file-manager');
+
+      Route::get('/kasir', [FrontendController::class, 'indexk']);
+    Route::group(['prefix' => '/kasir', 'middleware' => ['auth', 'kasir']], function () {
+        Route::get('/', [KasirController::class, 'index'])->name('kasir');
+        Route::get('/file-manager', function () {
+            return view('backend.layouts.file-manager');
+        })->name('file-manager');
 
         // Route::resource('users', 'UsersController');
         // // Banner
@@ -274,4 +275,36 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
         Route::post('change-password', [KasirController::class, 'changPasswordStore'])->name('change.password');
         Route::post('kasir/password/reset', [PasswordController::class, 'reset'])->name('kasir.password.reset');
 
-    // });
+        //Transaction untuk kasir
+        Route::post('/transaction/store', [TransactionController::class, 'store'])->name('transaction.store');
+        Route::get('/transactions', [TransactionController::class, 'index'])->name('transaction.index'); //ika kamu ingin menampilkan daftar transaksi di halaman lain,
+        Route::get('/kasir/category', [TransactionController::class, 'transaction']);
+        // Route::resource('transaction', CategoryController::class);
+        // Route::resource('transaction', TransactionController::class);
+        // Route::get('transaction/{id}', [TransactionController::class, 'show'])->name('transaction.show');
+
+    Route::post('/transaction/store', [TransactionController::class, 'store'])->name('transaction.store');
+    Route::get('/transactions', [TransactionController::class, 'index'])->name('transaction.index');
+    Route::get('/transaction/{id}', [TransactionController::class, 'show'])->name('transaction.show');
+
+
+
+
+
+
+
+        //transaction kasir
+// Route untuk menampilkan form create
+Route::get('/admin/transaction/create', [TransactionController::class, 'create'])->name('transaction.create');
+
+// Route untuk menyimpan transaksi baru
+Route::post('/admin/transaction/store', [TransactionController::class, 'store'])->name('transaction.store');
+
+// Route untuk menampilkan daftar transaksi
+Route::get('/admin/transaction', [TransactionController::class, 'index'])->name('transaction.index');
+
+
+//customers
+Route::resource('customers', CustomerController::class);
+
+    });
