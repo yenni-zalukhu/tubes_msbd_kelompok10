@@ -11,11 +11,11 @@
 							<div class="logo">
 								<a href="index.html"><img src="{{asset('backend/img/logo2.png')}}" alt="#"></a>
 							</div>
-							@php
+							{{-- @php
 								$settings=DB::table('settings')->get();
 							@endphp
 							<p class="text">@foreach($settings as $data) {{$data->short_des}} @endforeach</p>
-							<p class="call">Got Question? Call us 24/7<span><a href="tel:123456789">@foreach($settings as $data) {{$data->phone}} @endforeach</a></span></p>
+							<p class="call">Got Question? Call us 24/7<span><a href="tel:123456789">@foreach($settings as $data) {{$data->phone}} @endforeach</a></span></p> --}}
 						</div>
 						<!-- End Single Widget -->
 					</div>
@@ -49,7 +49,7 @@
 					</div>
 					<div class="col-lg-3 col-md-6 col-12">
 						<!-- Single Widget -->
-						<div class="single-footer social">
+						{{-- <div class="single-footer social">
 							<h4>Get In Tuch</h4>
 							<!-- Single Widget -->
 							<div class="contact">
@@ -58,7 +58,7 @@
 									<li>@foreach($settings as $data) {{$data->email}} @endforeach</li>
 									<li>@foreach($settings as $data) {{$data->phone}} @endforeach</li>
 								</ul>
-							</div>
+							</div> --}}
 							<!-- End Single Widget -->
 							<div class="sharethis-inline-follow-buttons"></div>
 						</div>

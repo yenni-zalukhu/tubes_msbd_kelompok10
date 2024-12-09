@@ -1,4 +1,4 @@
-@extends('backend.layouts.master')
+{{-- @extends('backend.layouts.master')
 
 @section('main-content')
 
@@ -9,7 +9,7 @@
         @csrf 
         {{-- @method('PATCH') --}}
         {{-- {{dd($data)}} --}}
-        <div class="form-group">
+        {{-- <div class="form-group">
           <label for="short_des" class="col-form-label">Short Description <span class="text-danger">*</span></label>
           <textarea class="form-control" id="quote" name="short_des">{{$data->short_des}}</textarea>
           @error('short_des')
@@ -96,8 +96,8 @@
         </div>
       </form>
     </div>
-</div>
-
+</div>  --}}
+{{-- 
 @endsection
 
 @push('styles')
@@ -136,4 +136,4 @@
       });
     });
 </script>
-@endpush
+@endpush --}}

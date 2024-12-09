@@ -29,14 +29,14 @@
             <td>{{$order->first_name}} {{$order->last_name}}</td>
             <td>{{$order->email}}</td>
             <td>{{$order->quantity}}</td>
-            <td>${{number_format($order->delivery_charge,2)}}</td>
-            <td>${{number_format($order->total_amount,2)}}</td>
+            <td>Rp{{number_format($order->delivery_charge,2)}}</td>
+            <td>Rp{{number_format($order->total_amount,2)}}</td>
             <td>
-                @if($order->status=='new')
+                @if($order->status=='pending')
                   <span class="badge badge-primary">{{$order->status}}</span>
                 @elseif($order->status=='process')
                   <span class="badge badge-warning">{{$order->status}}</span>
-                @elseif($order->status=='delivered')
+                @elseif($order->status=='finished')
                   <span class="badge badge-success">{{$order->status}}</span>
                 @else
                   <span class="badge badge-danger">{{$order->status}}</span>
@@ -80,11 +80,11 @@
                     </tr>
                     <tr>
                         <td>Shipping Charge</td>
-                        <td> : $ {{number_format($order->delivery_charge,2)}}</td>
+                        <td> : Rp {{number_format($order->delivery_charge,2)}}</td>
                     </tr>
                     <tr>
                         <td>Total Amount</td>
-                        <td> : $ {{number_format($order->total_amount,2)}}</td>
+                        <td> : Rp {{number_format($order->total_amount,2)}}</td>
                     </tr>
                     <tr>
                         <td>Payment Method</td>

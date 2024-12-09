@@ -26,9 +26,9 @@
 						<div class="col-lg-8 col-12">
 							<div class="form-main">
 								<div class="title">
-									@php
+									{{-- @php
 										$settings=DB::table('settings')->get();
-									@endphp
+									@endphp --}}
 									<h4>Get in touch</h4>
 									<h3>Write us a message @auth @else<span style="font-size:12px;" class="text-danger">[You need to login first]</span>@endauth</h3>
 								</div>
@@ -74,7 +74,7 @@
 								</form>
 							</div>
 						</div>
-						<div class="col-lg-4 col-12">
+						{{-- <div class="col-lg-4 col-12">
 							<div class="single-head">
 								<div class="single-info">
 									<i class="fa fa-phone"></i>
@@ -97,7 +97,7 @@
 										<li>@foreach($settings as $data) {{$data->address}} @endforeach</li>
 									</ul>
 								</div>
-							</div>
+							</div> --}}
 						</div>
 					</div>
 				</div>

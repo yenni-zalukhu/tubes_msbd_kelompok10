@@ -70,19 +70,19 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-12">
+                                    {{-- <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>Negara<span>*</span></label>
                                             <select name="country" id="country">
                                                 <option value="ID">Indonesia</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
-                                            <label>Alamat 1<span>*</span></label>
-                                            <input type="text" name="address1" placeholder="" value="{{old('address1')}}">
-                                            @error('address1')
+                                            <label>Alamat<span>*</span></label>
+                                            <input type="text" name="address" placeholder="" value="{{old('address')}}">
+                                            @error('address')
                                                 <span class='text-danger'>{{$message}}</span>
                                             @enderror
                                         </div>
@@ -98,10 +98,11 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
-                                            <label>Kode Pos</label>
-                                            <input type="text" name="post_code" placeholder="" value="{{old('post_code')}}">
-                                            @error('post_code')
-                                                <span class='text-danger'>{{$message}}</span>
+                                            <label>Tanggal Pengambilan Barang<span class="text-danger">*</span></label>
+                                            <input type="date" name="pickup_date" class="form-control" value="{{ old('pickup_date') }}" 
+                                                   min="{{ date('Y-m-d', strtotime('+1 day')) }}" required>
+                                            @error('pickup_date')
+                                            <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                                     </div>
@@ -118,7 +119,7 @@
                                     <div class="content">
                                         <ul>
 										    <li class="order_subtotal" data-price="{{Helper::totalCartPrice()}}">Cart Subtotal<span>Rp{{number_format(Helper::totalCartPrice(),2)}}</span></li>
-                                            <li class="shipping">
+                                            {{-- <li class="shipping">
                                                 Shipping Cost
                                                 @if(count(Helper::shipping())>0 && Helper::cartCount()>0)
                                                     <select name="shipping" class="nice-select">
@@ -130,7 +131,7 @@
                                                 @else 
                                                     <span>Free</span>
                                                 @endif
-                                            </li>
+                                            </li> --}}
                                             
                                             @if(session('coupon'))
                                             <li class="coupon_price" data-price="{{session('coupon')['value']}}">You Save<span>${{number_format(session('coupon')['value'],2)}}</span></li>
@@ -157,7 +158,6 @@
                                         <div class="checkbox">
                                             {{-- <label class="checkbox-inline" for="1"><input name="updates" id="1" type="checkbox"> Check Payments</label> --}}
                                             <form-group>
-                                                <input name="payment_method"  type="radio" value="cod"> <label> Cash On Delivery</label><br>
                                                 <input name="payment_method"  type="radio" value="transferBank"> <label> Transfer Bank</label><br>
                                                 <input name="payment_method"  type="radio" value="bayarditoko"> <label> Bayar Di Toko</label> 
                                             </form-group>

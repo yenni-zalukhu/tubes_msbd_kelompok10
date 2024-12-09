@@ -1,4 +1,4 @@
-@extends('backend.layouts.master')
+{{-- @extends('backend.layouts.master')
 
 @section('main-content')
  <!-- DataTales Example -->
@@ -75,7 +75,7 @@
                           </div>
                         </div>
                     </div> --}}
-                </tr>  
+                {{-- </tr>  
             @endforeach
           </tbody>
         </table>
@@ -160,4 +160,4 @@
           })
       })
   </script>
-@endpush
+@endpush --}}

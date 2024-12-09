@@ -252,4 +252,62 @@ class CartController extends Controller
         // }
         return view('frontend.pages.checkout');
     }
+
+    public function showPickupPage()
+    {
+        return view('frontend.payment.pickup');
+    }
+    
+    public function savePickup(Request $request)
+    {
+        $request->validate([
+            'pickup_date' => 'required|date|after:today',
+        ]);
+    
+        $order = Order::where('user_id', auth()->id())
+                      ->where('status', 'pending')
+                      ->latest()
+                      ->first();
+    
+        $order->update([
+            'pickup_date' => $request->pickup_date,
+            'payment_method' => 'bayar_ditoko',
+            'payment_status' => 'pending'
+        ]);
+    
+        return redirect()->route('user.order.index')->with('success', 'Jadwal pengambilan berhasil disimpan');
+    }
+    
+    public function showPaymentPage()
+    {
+        return view('frontend.payment.transfer');
+    }
+    
+    public function savePaymentProof(Request $request)
+    {
+        $request->validate([
+            'payment_proof' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+    
+        $order = Order::where('user_id', auth()->id())
+                      ->where('status', 'pending')
+                      ->latest()
+                      ->first();
+    
+        if ($request->hasFile('payment_proof')) {
+            $image = $request->file('payment_proof');
+            $name = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/storage/payment_proofs');
+            $image->move($destinationPath, $name);
+    
+            $order->update([
+                'payment_proof' => $name,
+                'payment_method' => 'transfer_bank',
+                'payment_status' => 'pending'
+            ]);
+        }
+    
+        return redirect()->route('user.order.index')->with('success', 'Bukti pembayaran berhasil diupload');
+    }
+    
 }

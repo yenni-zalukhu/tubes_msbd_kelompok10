@@ -93,6 +93,12 @@ Route::post('password/reset', [ResetPasswordController::class, 'showResetForm'])
             return view('frontend.pages.cart');
         })->name('cart');
         Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout')->middleware('user');
+
+
+// Add in admin group
+Route::post('/order/verify-payment/{id}', [OrderController::class, 'verifyPayment'])->name('admin.verify.payment');
+
+
     // Wishlist
         Route::get('/wishlist', function () {
             return view('frontend.pages.wishlist');
@@ -102,7 +108,9 @@ Route::post('password/reset', [ResetPasswordController::class, 'showResetForm'])
         Route::post('cart/order', [OrderController::class, 'store'])->name('cart.order');
         Route::get('order/pdf/{id}', [OrderController::class, 'pdf'])->name('order.pdf');
         Route::get('/income', [OrderController::class, 'incomeChart'])->name('product.order.income');
-    // Route::get('/user/chart',[AdminController::class, 'userPieChart'])->name('user.piechart');
+        Route::get('/order/{id}/bank-transfer', [OrderController::class, 'showBankTransfer'])->name('order.bank-transfer');
+        Route::post('/order/payment-proof/upload', [OrderController::class, 'uploadPaymentProof'])->name('payment.proof.upload');
+        // Route::get('/user/chart',[AdminController::class, 'userPieChart'])->name('user.piechart');
         Route::get('/product-grids', [FrontendController::class, 'productGrids'])->name('product-grids');
         Route::get('/product-lists', [FrontendController::class, 'productLists'])->name('product-lists');
         Route::match(['get', 'post'], '/filter', [FrontendController::class, 'productFilter'])->name('shop.filter');
@@ -171,13 +179,13 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
 
             // Order
             Route::resource('/order', 'OrderController');
-            // Shipping
-            Route::resource('/shipping', 'ShippingController');
+            // // Shipping
+            // Route::resource('/shipping', 'ShippingController');
             // Coupon
             Route::resource('/coupon', 'CouponController');
-            // Settings
-            Route::get('settings', [AdminController::class, 'settings'])->name('settings');
-            Route::post('setting/update', [AdminController::class, 'settingsUpdate'])->name('settings.update');
+            // // Settings
+            // Route::get('settings', [AdminController::class, 'settings'])->name('settings');
+            // Route::post('setting/update', [AdminController::class, 'settingsUpdate'])->name('settings.update');
 
             // Notification
             Route::get('/notification/{id}', [NotificationController::class, 'show'])->name('admin.notification');
@@ -187,6 +195,11 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
             Route::get('change-password', [AdminController::class, 'changePassword'])->name('change.password.form');
             Route::post('change-password', [AdminController::class, 'changPasswordStore'])->name('change.password');
         });
+
+        Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+            Lfm::routes();
+        });
+    
 
 
     // User section start
@@ -218,10 +231,6 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
         });
 
 
-    Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
-        Lfm::routes();
-    });
-
 
 
 
@@ -232,48 +241,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
             return view('backend.layouts.file-manager');
         })->name('file-manager');
 
-        // Route::resource('users', 'UsersController');
-        // // Banner
-        Route::resource('banner', 'BannerController');
-        // Brand
-        Route::resource('brand', 'BrandController');
-        // Profile
-        // Route::get('/profile', [KasirController::class, 'profile'])->name('admin-profile');
-        // Route::post('/profile/{id}', [KasirController::class, 'profileUpdate'])->name('profile-update');
-        // Category
-        Route::resource('/category', 'CategoryController');
-        // Product
-        // Route::resource('/product', 'ProductController');
-        // Ajax for sub category
-        // Route::post('/category/{id}/child', 'CategoryController@getChildByParent');
-        // POST category
-        // Route::resource('/post-category', 'PostCategoryController');
-        // Post tag
-        // Route::resource('/post-tag', 'PostTagController');
-        // Post
-        // Route::resource('/post', 'PostController');
-        // Message
-        // Route::resource('/message', 'MessageController');
-        // Route::get('/message/five', [MessageController::class, 'messageFive'])->name('messages.five');
-
-        // Order
-        // Route::resource('/order', 'OrderController');
-        // Shipping
-        // Route::resource('/shipping', 'ShippingController');
-        // Coupon
-        // Route::resource('/coupon', 'CouponController');
-        // Settings
-        // Route::get('settings', [KasirController::class, 'settings'])->name('settings');
-        // Route::post('setting/update', [KasirController::class, 'settingsUpdate'])->name('settings.update');
-
-        // Notification
-        // Route::get('/notification/{id}', [NotificationController::class, 'show'])->name('admin.notification');
-        // Route::get('/notifications', [NotificationController::class, 'index'])->name('all.notification');
-        // Route::delete('/notification/{id}', [NotificationController::class, 'delete'])->name('notification.delete');
-        // Password Change
-        // Route::get('change-password', [KasirController::class, 'changePassword'])->name('change.password.form');
-        // Route::post('change-password', [KasirController::class, 'changPasswordStore'])->name('change.password');
-        // Route::post('kasir/password/reset', [PasswordController::class, 'reset'])->name('kasir.password.reset');
+      
 
         //Transaction untuk kasir
         Route::post('/transaction/store', [TransactionController::class, 'store'])->name('transaction.store');
@@ -307,4 +275,49 @@ Route::get('/admin/transaction', [TransactionController::class, 'index'])->name(
 //customers
 Route::resource('customers', CustomerController::class);
 
+
+
+
+  // Route::resource('users', 'UsersController');
+        // // Banner
+        // Route::resource('banner', 'BannerController');
+        // // Brand
+        // Route::resource('brand', 'BrandController');
+        // Profile
+        // Route::get('/profile', [KasirController::class, 'profile'])->name('admin-profile');
+        // Route::post('/profile/{id}', [KasirController::class, 'profileUpdate'])->name('profile-update');
+        // Category
+        // Route::resource('/category', 'CategoryController');
+        // Product
+        // Route::resource('/product', 'ProductController');
+        // Ajax for sub category
+        // Route::post('/category/{id}/child', 'CategoryController@getChildByParent');
+        // POST category
+        // Route::resource('/post-category', 'PostCategoryController');
+        // Post tag
+        // Route::resource('/post-tag', 'PostTagController');
+        // Post
+        // Route::resource('/post', 'PostController');
+        // Message
+        // Route::resource('/message', 'MessageController');
+        // Route::get('/message/five', [MessageController::class, 'messageFive'])->name('messages.five');
+
+        // Order
+        // Route::resource('/order', 'OrderController');
+        // Shipping
+        // Route::resource('/shipping', 'ShippingController');
+        // Coupon
+        // Route::resource('/coupon', 'CouponController');
+        // Settings
+        // Route::get('settings', [KasirController::class, 'settings'])->name('settings');
+        // Route::post('setting/update', [KasirController::class, 'settingsUpdate'])->name('settings.update');
+
+        // Notification
+        // Route::get('/notification/{id}', [NotificationController::class, 'show'])->name('admin.notification');
+        // Route::get('/notifications', [NotificationController::class, 'index'])->name('all.notification');
+        // Route::delete('/notification/{id}', [NotificationController::class, 'delete'])->name('notification.delete');
+        // Password Change
+        // Route::get('change-password', [KasirController::class, 'changePassword'])->name('change.password.form');
+        // Route::post('change-password', [KasirController::class, 'changPasswordStore'])->name('change.password');
+        // Route::post('kasir/password/reset', [PasswordController::class, 'reset'])->name('kasir.password.reset');
     });

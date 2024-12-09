@@ -22,7 +22,6 @@
               <th>Name</th>
               <th>Email</th>
               <th>Quantity</th>
-              <th>Charge</th>
               <th>Total Amount</th>
               <th>Status</th>
               <th>Action</th>
@@ -35,7 +34,6 @@
               <th>Name</th>
               <th>Email</th>
               <th>Quantity</th>
-              <th>Charge</th>
               <th>Total Amount</th>
               <th>Status</th>
               <th>Action</th>
@@ -49,27 +47,35 @@
                     <td>{{$order->first_name}} {{$order->last_name}}</td>
                     <td>{{$order->email}}</td>
                     <td>{{$order->quantity}}</td>
-                    <td>${{$order->shipping->price}}</td>
-                    <td>${{number_format($order->total_amount,2)}}</td>
+                    <td>Rp{{number_format($order->total_amount,2)}}</td>
                     <td>
-                        @if($order->status=='new')
-                          <span class="badge badge-primary">{{$order->status}}</span>
-                        @elseif($order->status=='process')
-                          <span class="badge badge-warning">{{$order->status}}</span>
-                        @elseif($order->status=='delivered')
-                          <span class="badge badge-success">{{$order->status}}</span>
-                        @else
-                          <span class="badge badge-danger">{{$order->status}}</span>
-                        @endif
+                      @if($order->status=='pending')
+                      <span class="badge badge-primary">{{$order->status}}</span>
+                    @elseif($order->status=='process')
+                      <span class="badge badge-warning">{{$order->status}}</span>
+                    @elseif($order->status=='finished')
+                      <span class="badge badge-success">{{$order->status}}</span>
+                    @else
+                      <span class="badge badge-danger">{{$order->status}}</span>
+                    @endif
                     </td>
                     <td>
-                        <a href="{{route('user.order.show',$order->id)}}" class="btn btn-warning btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
-                        <form method="POST" action="{{route('user.order.delete',[$order->id])}}">
-                          @csrf
+                      <a href="{{ route('user.order.show', $order->id) }}" class="btn btn-warning btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="View" data-placement="bottom">
+                          <i class="fas fa-eye"></i>
+                      </a>
+                      <form method="POST" action="{{ route('user.order.delete', [$order->id]) }}">
+                          @csrf 
                           @method('delete')
-                              <button class="btn btn-danger btn-sm dltBtn" data-id={{$order->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
-                        </form>
-                    </td>
+                          <button class="btn btn-danger btn-sm dltBtn" data-id={{ $order->id }} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete">
+                              <i class="fas fa-trash-alt"></i>
+                          </button>
+                      </form>
+                      <!-- Button Baru -->
+                      <a href="{{ route('order.bank-transfer', $order->id) }}" class="btn btn-success btn-sm float-left ml-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="Upload Bukti Pembayaran" data-placement="bottom">
+                          <i class="fas fa-upload"></i>
+                      </a>
+                  </td>
+                  
                 </tr>
             @endforeach
           </tbody>
@@ -95,6 +101,7 @@
 
 @push('scripts')
 
+  @push('scripts')
   <!-- Page level plugins -->
   <script src="{{asset('backend/vendor/datatables/jquery.dataTables.min.js')}}"></script>
   <script src="{{asset('backend/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
@@ -103,7 +110,6 @@
   <!-- Page level custom scripts -->
   <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
   <script>
-
       $('#order-dataTable').DataTable( {
             "columnDefs":[
                 {
@@ -114,38 +120,35 @@
         } );
 
         // Sweet alert
-
         function deleteData(id){
-
+            // Implement delete confirmation logic here
         }
-  </script>
-  <script>
+
       $(document).ready(function(){
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-          $('.dltBtn').click(function(e){
+        $('.dltBtn').click(function(e){
             var form=$(this).closest('form');
-              var dataID=$(this).data('id');
-              // alert(dataID);
-              e.preventDefault();
-              swal({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this data!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
-                       form.submit();
-                    } else {
-                        swal("Your data is safe!");
-                    }
-                });
-          })
+            var dataID=$(this).data('id');
+            e.preventDefault();
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this data!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    form.submit();
+                } else {
+                    swal("Your data is safe!");
+                }
+            });
+        })
       })
   </script>
 @endpush

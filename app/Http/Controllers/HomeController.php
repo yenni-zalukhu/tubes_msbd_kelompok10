@@ -62,7 +62,7 @@ class HomeController extends Controller
     {
         $order=Order::find($id);
         if($order){
-           if($order->status=="process" || $order->status=='delivered' || $order->status=='cancel'){
+           if($order->status=="pending" || $order->status=='process' || $order->status=='finished'){
                 return redirect()->back()->with('error','You can not delete this order now');
            }
            else{

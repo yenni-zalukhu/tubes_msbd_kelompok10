@@ -68,6 +68,7 @@
 </section>
 <!-- End Small Banner -->
 
+
 <!-- Start Product Area -->
 <div class="product-area section">
         <div class="container">
@@ -82,34 +83,25 @@
                 <div class="col-12">
                     <div class="product-info">
                         <div class="nav-main">
-                            <!-- Tab Nav -->
-                            <ul class="nav nav-tabs filter-tope-group" id="myTab" role="tablist">
-                                @php
-                                    $categories=DB::table('categories')->where('status','active')->where('is_parent',1)->get();
-                                    // dd($categories);
-                                @endphp
-                                @if($categories)
-                                <button 
-                                class="custom-btn"
-                                onclick="window.location.href='{{ route('product-grids') }}';"
-                            >
+                          <!-- Tab Nav -->
+                          <ul class="nav nav-tabs filter-tope-group" id="myTab" role="tablist">
+                            @php
+                                $categories=DB::table('categories')->where('status','active')->where('is_parent',1)->get();
+                                // dd($categories);
+                            @endphp
+                            @if($categories)
+                            <button class="btn" style="background:black"data-filter="*">
                                 All Products
                             </button>
-                            
-                            
-                                    @foreach($categories as $key=>$cat)
-                                    <button 
-                                    class="btn" 
-                                    style="background:black; color:white; padding:10px 20px; border:none; cursor:pointer;" 
-                                    onclick="window.location.href='{{ route('admin.products') }}';"
-                                >
-                                    All Products
+                                @foreach($categories as $key=>$cat)
+
+                                <button class="btn" style="background:none;color:black;"data-filter=".{{$cat->id}}">
+                                    {{$cat->title}}
                                 </button>
-                                
-                                    @endforeach
-                                @endif
-                            </ul>
-                            <!--/ End Tab Nav -->
+                                @endforeach
+                            @endif
+                        </ul>
+                        <!--/ End Tab Nav -->
                         </div>
                         <div class="tab-content isotope-grid" id="myTabContent">
                              <!-- Start Single Tab -->
@@ -513,9 +505,9 @@
                                                 <a href="{{route('add-to-wishlist',$product->slug)}}" class="btn min"><i class="ti-heart"></i></a>
                                             </div>
                                         </form>
-                                        <div class="default-social">
+                                        {{-- <div class="default-social">
                                         <!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>

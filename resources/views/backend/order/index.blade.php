@@ -22,8 +22,9 @@
               <th>Name</th>
               <th>Email</th>
               <th>Quantity</th>
-              <th>Charge</th>
               <th>Total Amount</th>
+              <th>Payment Method</th>
+              <th>Tanggal Ambil Barang</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -35,40 +36,48 @@
               <th>Name</th>
               <th>Email</th>
               <th>Quantity</th>
-              <th>Charge</th>
               <th>Total Amount</th>
+              <th>Payment Method</th>
+              <th>Tanggal Ambil Barang</th>
               <th>Status</th>
               <th>Action</th>
-              </tr>
+            </tr>
           </tfoot>
           <tbody>
             @foreach($orders as $order)  
-            @php
-                $shipping_charge=DB::table('shippings')->where('id',$order->shipping_id)->pluck('price');
-            @endphp 
                 <tr>
                     <td>{{$order->id}}</td>
                     <td>{{$order->order_number}}</td>
                     <td>{{$order->first_name}} {{$order->last_name}}</td>
                     <td>{{$order->email}}</td>
                     <td>{{$order->quantity}}</td>
-                    <td>@foreach($shipping_charge as $data) $ {{number_format($data,2)}} @endforeach</td>
-                    <td>${{number_format($order->total_amount,2)}}</td>
+                    <td>Rp{{number_format($order->total_amount, 2)}}</td>
                     <td>
-                        @if($order->status=='new')
+                        @if($order->payment_method == 'bayarditoko')
+                            Bayar Di Toko
+                        @elseif($order->payment_method == 'bank_transfer')
+                            Bank Transfer
+                        @else
+                            N/A
+                        @endif
+                    </td>
+                    <td>{{$order->pickup_date}}</td>
+                    <td>
+                        @if($order->status == 'pending')
                           <span class="badge badge-primary">{{$order->status}}</span>
-                        @elseif($order->status=='process')
+                        @elseif($order->status == 'process')
                           <span class="badge badge-warning">{{$order->status}}</span>
-                        @elseif($order->status=='delivered')
+                        @elseif($order->status == 'finished')
                           <span class="badge badge-success">{{$order->status}}</span>
                         @else
                           <span class="badge badge-danger">{{$order->status}}</span>
                         @endif
+                        
                     </td>
                     <td>
-                        <a href="{{route('order.show',$order->id)}}" class="btn btn-warning btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
-                        <a href="{{route('order.edit',$order->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
-                        <form method="POST" action="{{route('order.destroy',[$order->id])}}">
+                        <a href="{{route('order.show', $order->id)}}" class="btn btn-warning btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
+                        <a href="{{route('order.edit', $order->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
+                        <form method="POST" action="{{route('order.destroy', [$order->id])}}">
                           @csrf 
                           @method('delete')
                               <button class="btn btn-danger btn-sm dltBtn" data-id={{$order->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
@@ -98,7 +107,6 @@
 @endpush
 
 @push('scripts')
-
   <!-- Page level plugins -->
   <script src="{{asset('backend/vendor/datatables/jquery.dataTables.min.js')}}"></script>
   <script src="{{asset('backend/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
@@ -107,7 +115,6 @@
   <!-- Page level custom scripts -->
   <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
   <script>
-      
       $('#order-dataTable').DataTable( {
             "columnDefs":[
                 {
@@ -118,38 +125,35 @@
         } );
 
         // Sweet alert
-
         function deleteData(id){
-            
+            // Implement delete confirmation logic here
         }
-  </script>
-  <script>
+
       $(document).ready(function(){
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-          $('.dltBtn').click(function(e){
+        $('.dltBtn').click(function(e){
             var form=$(this).closest('form');
-              var dataID=$(this).data('id');
-              // alert(dataID);
-              e.preventDefault();
-              swal({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this data!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
-                       form.submit();
-                    } else {
-                        swal("Your data is safe!");
-                    }
-                });
-          })
+            var dataID=$(this).data('id');
+            e.preventDefault();
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this data!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    form.submit();
+                } else {
+                    swal("Your data is safe!");
+                }
+            });
+        })
       })
   </script>
 @endpush
