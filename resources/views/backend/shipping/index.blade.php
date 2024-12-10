@@ -1,4 +1,4 @@
-{{-- @extends('backend.layouts.master')
+@extends('backend.layouts.master')
 
 @section('main-content')
  <!-- DataTales Example -->
@@ -39,7 +39,7 @@
                 <tr>
                     <td>{{$shipping->id}}</td>
                     <td>{{$shipping->type}}</td>
-                    <td>${{$shipping->price}}</td>
+                    <td>Rp{{$shipping->price}}</td>
                     <td>
                         @if($shipping->status=='active')
                             <span class="badge badge-success">{{$shipping->status}}</span>
@@ -56,7 +56,7 @@
                         </form>
                     </td>
                     {{-- Delete Modal --}}
-                    {{-- <div class="modal fade" id="delModal{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="#delModal{{$user->id}}Label" aria-hidden="true">
+                   {{-- <div class="modal fade" id="delModal{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="#delModal{{$user->id}}Label" aria-hidden="true"> 
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -74,8 +74,8 @@
                             </div>
                           </div>
                         </div>
-                    </div> --}}
-                {{-- </tr>  
+                    </div>  --}}
+                </tr>  
             @endforeach
           </tbody>
         </table>
@@ -85,8 +85,8 @@
         @endif
       </div>
     </div>
-</div>
-@endsection
+</div> 
+@endsection 
 
 @push('styles')
   <link href="{{asset('backend/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
@@ -160,4 +160,4 @@
           })
       })
   </script>
-@endpush --}}
+@endpush

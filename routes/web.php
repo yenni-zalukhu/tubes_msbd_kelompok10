@@ -178,7 +178,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
 
 
             // Order
-            Route::resource('/order', 'OrderController');
+            // Route::resource('/order', 'OrderController');
             // // Shipping
             // Route::resource('/shipping', 'ShippingController');
             // Coupon
@@ -303,7 +303,7 @@ Route::resource('customers', CustomerController::class);
         // Route::get('/message/five', [MessageController::class, 'messageFive'])->name('messages.five');
 
         // Order
-        // Route::resource('/order', 'OrderController');
+        Route::resource('/order', 'OrderController');
         // Shipping
         // Route::resource('/shipping', 'ShippingController');
         // Coupon

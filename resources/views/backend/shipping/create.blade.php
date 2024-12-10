@@ -2,7 +2,7 @@
 
 @section('main-content')
 
-{{-- <div class="card">
+<div class="card">
     <h5 class="card-header">Add Shipping</h5>
     <div class="card-body">
       <form method="post" action="{{route('shipping.store')}}">
@@ -13,7 +13,7 @@
         @error('type')
         <span class="text-danger">{{$message}}</span>
         @enderror
-        </div> --}}
+        </div>
 
         <div class="form-group">
           <label for="price" class="col-form-label">Price <span class="text-danger">*</span></label>

@@ -55,7 +55,7 @@
                     <td>
                         @if($order->payment_method == 'bayarditoko')
                             Bayar Di Toko
-                        @elseif($order->payment_method == 'bank_transfer')
+                        @elseif($order->payment_method == 'transfer_bank')
                             Bank Transfer
                         @else
                             N/A
