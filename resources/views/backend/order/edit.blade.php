@@ -10,15 +10,30 @@
       @csrf
       @method('PATCH')
       <div class="form-group">
-        <label for="status">Status :</label>
+        <label for="status">Status Order:</label>
         <select name="status" id="" class="form-control">
-          <option value="pending" {{($order->status=='finished' || $order->status=="process" || $order->status=="cancel") ? 'disabled' : ''}}  {{(($order->status=='pending')? 'selected' : '')}}>Pending</option>
-          <option value="process" {{($order->status=='finished'|| $order->status=="cancel") ? 'disabled' : ''}}  {{(($order->status=='process')? 'selected' : '')}}>Process</option>
-          <option value="finished" {{($order->status=="cancel") ? 'disabled' : ''}}  {{(($order->status=='finished')? 'selected' : '')}}>Finish</option>
-          <option value="cancel" {{($order->status=='finished') ? 'disabled' : ''}}  {{(($order->status=='cancel')? 'selected' : '')}}>Cancel</option>
+            <option value="pending" {{($order->status=='finished' || $order->status=="process" || $order->status=="cancel") ? 'disabled' : ''}}  {{(($order->status=='pending')? 'selected' : '')}}>Pending</option>
+            <option value="process" {{($order->status=='finished'|| $order->status=="cancel") ? 'disabled' : ''}}  {{(($order->status=='process')? 'selected' : '')}}>Process</option>
+            <option value="finished" {{($order->status=="cancel") ? 'disabled' : ''}}  {{(($order->status=='finished')? 'selected' : '')}}>Finish</option>
+            <option value="cancel" {{($order->status=='finished') ? 'disabled' : ''}}  {{(($order->status=='cancel')? 'selected' : '')}}>Cancel</option>
         </select>
-      </div>
-      <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+    
+    <div class="form-group">
+        <label for="payment_status">Status Pembayaran:</label>
+        <select name="payment_status" id="" class="form-control">
+           
+          <!-- Status Pembayaran - Sudah Dibayar -->
+<option value="belum dibayar" {{($order->payment_status == 'sudah dibayar') ? 'selected' : ''}}>Belum Dibayar</option>
+
+<!-- Status Pembayaran - Belum Dibayar -->
+<option value="sudah dibayar" {{($order->payment_status == 'belum dibayar') ? 'selected' : ''}}>Sudah Dibayar</option>
+
+        </select>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Update</button>
+    
     </form>
 
       

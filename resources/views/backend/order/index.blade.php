@@ -2,6 +2,10 @@
 
 @section('main-content')
  <!-- DataTales Example -->
+ <div class="image-modal" id="imageModal">
+  <span class="close-modal" id="closeModal">&times;</span>
+  <img id="modalImage" src="" alt="Payment Proof">
+</div>
  <div class="card shadow mb-4">
      <div class="row">
          <div class="col-md-12">
@@ -26,6 +30,7 @@
               <th>Payment Method</th>
               <th>Tanggal Ambil Barang</th>
               <th>Status</th>
+              <th>Payment Proof</th> <!-- New column for payment proof -->
               <th>Action</th>
             </tr>
           </thead>
@@ -40,6 +45,7 @@
               <th>Payment Method</th>
               <th>Tanggal Ambil Barang</th>
               <th>Status</th>
+              <th>Payment Proof</th> <!-- New column for payment proof -->
               <th>Action</th>
             </tr>
           </tfoot>
@@ -72,8 +78,14 @@
                         @else
                           <span class="badge badge-danger">{{$order->status}}</span>
                         @endif
-                        
                     </td>
+                    <td>
+                      @if($order->payment_proof)
+                          <img src="{{ asset('storage/'.$order->payment_proof) }}" class="img-fluid payment-proof zoom" style="max-width:80px;" alt="Payment Proof">
+                      @else
+                          <span class="text-muted">No proof</span>
+                      @endif
+                  </td>
                     <td>
                         <a href="{{route('order.show', $order->id)}}" class="btn btn-warning btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
                         <a href="{{route('order.edit', $order->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
@@ -103,7 +115,75 @@
       div.dataTables_wrapper div.dataTables_paginate{
           display: none;
       }
+
+        /* Styling untuk gambar kecil */
+    .payment-proof {
+        transition: transform 0.3s ease-in-out;
+        cursor: pointer;
+        max-width: 80px;
+    }
+
+    /* Modal background */
+    .image-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Gambar besar di dalam modal */
+    .image-modal img {
+        max-width: 90%;
+        max-height: 90%;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    /* Close button di modal */
+    .image-modal .close-modal {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        color: #fff;
+        font-size: 30px;
+        cursor: pointer;
+        z-index: 10000;
+  }
+
   </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const images = document.querySelectorAll('.payment-proof');
+      const modal = document.getElementById('imageModal');
+      const modalImage = document.getElementById('modalImage');
+      const closeModal = document.getElementById('closeModal');
+
+      images.forEach(image => {
+          image.addEventListener('click', function () {
+              modalImage.src = this.src; // Ambil URL gambar yang di-klik
+              modal.style.display = 'flex'; // Tampilkan modal
+          });
+      });
+
+      closeModal.addEventListener('click', function () {
+          modal.style.display = 'none'; // Sembunyikan modal
+      });
+
+      // Tutup modal jika area di luar gambar diklik
+      modal.addEventListener('click', function (e) {
+          if (e.target === modal) {
+              modal.style.display = 'none';
+          }
+      });
+  });
+</script>
 @endpush
 
 @push('scripts')
@@ -119,7 +199,7 @@
             "columnDefs":[
                 {
                     "orderable":false,
-                    "targets":[8]
+                    "targets":[9, 10]  // Disable sorting for the last two columns
                 }
             ]
         } );

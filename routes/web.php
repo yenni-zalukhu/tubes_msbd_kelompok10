@@ -138,12 +138,13 @@ Route::post('/order/verify-payment/{id}', [OrderController::class, 'verifyPaymen
     // Coupon
         Route::post('/coupon-store', [CouponController::class, 'couponStore'])->name('coupon-store');
     // Payment
-        Route::get('payment', [PayPalController::class, 'payment'])->name('payment');
+        Route::get('index', [FrontendController::class, 'index'])->name('index');
         Route::get('cancel', [PayPalController::class, 'cancel'])->name('payment.cancel');
         Route::get('payment/success', [PayPalController::class, 'success'])->name('payment.success');
 
 
     // Backend section start
+
 
 
 Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function () {
@@ -305,7 +306,7 @@ Route::resource('customers', CustomerController::class);
         // Order
         Route::resource('/order', 'OrderController');
         // Shipping
-        // Route::resource('/shipping', 'ShippingController');
+        Route::resource('/shipping', 'ShippingController');
         // Coupon
         // Route::resource('/coupon', 'CouponController');
         // Settings

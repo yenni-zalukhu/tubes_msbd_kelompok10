@@ -86,13 +86,13 @@
       <h6>Invoice to</h6>
        <h3>{{$order->first_name}} {{$order->last_name}}</h3>
        <div class="address">
-        <p>
+        {{-- <p>
           <strong>Country: </strong>
           {{$order->country}}
-        </p>
+        </p> --}}
         <p>
           <strong>Address: </strong>
-          {{ $order->address1 }} OR {{ $order->address2}}
+          {{ $order->address }} 
         </p>
          <p><strong>Phone:</strong> {{ $order->phone }}</p>
          <p><strong>Email:</strong> {{ $order->email }}</p>

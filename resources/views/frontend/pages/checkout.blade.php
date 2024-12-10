@@ -81,7 +81,7 @@
                                     </div> --}}
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
-                                            <label>Alamat 1<span>*</span></label>
+                                            <label>Alamat<span>*</span></label>
                                             <input type="text" name="address" placeholder="" value="{{old('address')}}">
                                             @error('address')
                                                 <span class='text-danger'>{{$message}}</span>
@@ -223,6 +223,7 @@
             const shippingPrice = selectedOption.getAttribute('data-price');
             document.getElementById('shippingCostValue').value = shippingPrice;
             document.getElementById('shippingCostText').innerText = 'Rp' + shippingPrice;
+            // document.getElementById('shipping_id').value = shippingId;
             
             // Update total price after shipping cost is applied
             const cartSubtotal = document.querySelector('.order_subtotal').getAttribute('data-price');

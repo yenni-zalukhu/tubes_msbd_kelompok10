@@ -6,27 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 class ShippingsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
-        Schema::create('shippings', function (Blueprint $table) {
-            $table->id();
-            $table->string('type');
-            $table->decimal('price');
-            $table->enum('status',['active','inactive'])->default('active');
-            $table->timestamps();
-        });
+        // Periksa apakah tabel 'shippings' sudah ada sebelum membuatnya
+        if (!Schema::hasTable('shippings')) {
+            Schema::create('shippings', function (Blueprint $table) {
+                $table->id();
+                $table->string('type');
+                $table->decimal('price', 8, 2);
+                $table->enum('status', ['active', 'inactive'])->default('active');
+                $table->timestamps();
+            });
+        }
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('shippings');

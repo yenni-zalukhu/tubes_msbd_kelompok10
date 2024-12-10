@@ -52,7 +52,8 @@ class OrderController extends Controller
             'coupon'=>'nullable|numeric',
             'phone'=>'numeric|required',
             'post_code'=>'string|nullable',
-            'email'=>'string|required'
+            'email'=>'string|required',
+            'shipping_id'=>'unsignedBigInteger|nullable'
         ]);
         // return $request->all();
 
@@ -120,7 +121,7 @@ class OrderController extends Controller
         $order_data['status']="pending";
         if(request('payment_method')=='transfer_bank'){
             $order_data['payment_method']='transfer_bank';
-            $order_data['payment_status']='sudah dibayar';
+            $order_data['payment_status']='belum dibayar';
         }
         else{
             $order_data['payment_method']='bayarditoko';
@@ -137,13 +138,13 @@ class OrderController extends Controller
             'fas'=>'fa-file-alt'
         ];
         // Notification::send($users, new StatusNotification($details));
-        if(request('payment_method')=='transfer_bank'){
-            return redirect()->route('payment')->with(['id'=>$order->id]);
-        }
-        else{
-            session()->forget('cart');
-            session()->forget('coupon');
-        }
+        // if(request('payment_method')=='transfer_bank'){
+        //     return redirect()->route('index')->with(['id'=>$order->id]);
+        // }
+        // else{
+        //     session()->forget('cart');
+        //     session()->forget('coupon');
+        // }
         Cart::where('user_id', auth()->user()->id)->where('order_id', null)->update(['order_id' => $order->id]);
 
         // dd($users);        
@@ -151,6 +152,34 @@ class OrderController extends Controller
         return redirect()->route('home');
     }
 
+    public function showBankTransfer($id)
+    {
+        $order = Order::findOrFail($id); // Pastikan model Order sudah diimport
+        return view('frontend.pages.bank-transfer', compact('order'));
+    }
+
+    public function uploadPaymentProof(Request $request)
+    {
+        $request->validate([
+            'payment_proof' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi file
+        ]);
+    
+        if ($request->hasFile('payment_proof')) {
+            $file = $request->file('payment_proof');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('public/payment_proofs', $fileName);
+    
+            $order = Order::find($request->order_id);
+            if ($order) {
+                $order->payment_proof = 'payment_proofs/' . $fileName;
+                $order->save();
+            }
+    
+            return back()->with('success', 'Bukti pembayaran berhasil diunggah.');
+        }
+    
+        return back()->with('error', 'Gagal mengunggah bukti pembayaran.');
+    }
     /**
      * Display the specified resource.
      *
@@ -304,4 +333,6 @@ class OrderController extends Controller
         }
         return $data;
     }
+
+
 }

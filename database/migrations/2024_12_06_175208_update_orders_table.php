@@ -10,15 +10,16 @@ class UpdateOrdersTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-             // Menambahkan kolom pickup_date
-             table->date('pickup_date');
+            if (!Schema::hasColumn('orders', 'pickup_date')) {
+                $table->date('pickup_date')->nullable();
+            }
         
-            
-            // Modify enums
+            // Modifikasi kolom lainnya
             $table->enum('payment_method', ['bayarditoko', 'transfer_bank'])->default('bayarditoko')->change();
             $table->enum('payment_status', ['sudah dibayar', 'belum dibayar'])->default('belum dibayar')->change();
             $table->enum('status', ['pending', 'process', 'finished', 'cancel'])->default('pending')->change();
         });
+        
     }
 
     public function down()

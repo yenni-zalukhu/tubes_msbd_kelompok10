@@ -71,9 +71,9 @@
                           </button>
                       </form>
                       <!-- Button Baru -->
-                      {{-- <a href="{{ route('order.bank-transfer', $order->id) }}" class="btn btn-success btn-sm float-left ml-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="Upload Bukti Pembayaran" data-placement="bottom">
+                      <a href="{{ route('order.bank-transfer', $order->id) }}" class="btn btn-success btn-sm float-left ml-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="Upload Bukti Pembayaran" data-placement="bottom">
                           <i class="fas fa-upload"></i>
-                      </a> --}}
+                      </a>
                   </td>
                   
                 </tr>
