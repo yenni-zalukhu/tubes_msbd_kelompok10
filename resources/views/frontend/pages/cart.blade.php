@@ -155,52 +155,52 @@
 	<!--/ End Shopping Cart -->
 
 	<!-- Start Shop Services Area  -->
-<section class="shop-services section home">
+{{-- <section class="shop-services section home">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-md-6 col-12">
+            <div class="col-lg-3 col-md-6 col-12"> --}}
                 <!-- Start Single Service -->
-                <div class="single-service">
+                {{-- <div class="single-service">
                     <i class="ti-rocket"></i>
                     <h4>Gratis Ongkir</h4>
                     <p>Pembelian diatas Rp100.000</p>
-                </div>
+                </div> --}}
                 <!-- End Single Service -->
-            </div>
+            {{-- </div>
             <div class="col-lg-3 col-md-6 col-12">
                 <!-- Start Single Service -->
                 <div class="single-service">
                     <i class="ti-reload"></i>
                     <h4>Pengembalian Gratis</h4>
                     <p>Garansi Pengembalian</p>
-                </div>
+                </div> --}}
                 <!-- End Single Service -->
-            </div>
+            {{-- </div>
             <div class="col-lg-3 col-md-6 col-12">
                 <!-- Start Single Service -->
                 <div class="single-service">
                     <i class="ti-lock"></i>
                     <h4>Pembayaran Aman</h4>
                     <p>Platform Terpercaya</p>
-                </div>
+                </div> --}}
                 <!-- End Single Service -->
-            </div>
+            {{-- </div>
             <div class="col-lg-3 col-md-6 col-12">
                 <!-- Start Single Service -->
                 <div class="single-service">
                     <i class="ti-tag"></i>
                     <h4>Harga Termurah</h4>
                     <p>Harga Dijamin Murah</p>
-                </div>
+                </div> --}}
                 <!-- End Single Service -->
-				</div>
+				{{-- </div>
 			</div>
 		</div>
-	</section>
+	</section> --}}
 	<!-- End Shop Newsletter -->
 
 	<!-- Start Shop Newsletter  -->
-	@include('frontend.layouts.newsletter')
+	{{-- @include('frontend.layouts.newsletter') --}}
 	<!-- End Shop Newsletter -->
 
 @endsection

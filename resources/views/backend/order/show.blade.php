@@ -68,6 +68,17 @@
                         <td>Order Number</td>
                         <td> : {{$order->order_number}}</td>
                     </tr>
+
+                    <tr>
+                      <tr>
+                        <td>Product ID</td>
+                        <td>: {{ $order->product_id ?? 'Product ID not found' }}</td>
+                    </tr>
+                    
+                  
+                  
+                  
+
                     <tr>
                         <td>Order Date</td>
                         <td> : {{$order->created_at->format('D d M, Y')}} at {{$order->created_at->format('g : i a')}} </td>

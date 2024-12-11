@@ -90,12 +90,19 @@
                                 // dd($categories);
                             @endphp
                             @if($categories)
-                            <button class="btn" style="background:black"data-filter="*">
+                            <button class="btn" style="background: #776B5D; border-radius: 10px;" data-filter="*">
                                 All Products
                             </button>
+                            
+                            <style>
+                                .btn:hover {
+                                    background-color: #EBE3D5;
+                                }
+                            </style>
+
                                 @foreach($categories as $key=>$cat)
 
-                                <button class="btn" style="background:none;color:black;"data-filter=".{{$cat->id}}">
+                                <button class="btn" style="background:none;color:#776B5D; border-radius: 10px;"data-filter=".{{$cat->id}}">
                                     {{$cat->title}}
                                 </button>
                                 @endforeach
@@ -197,32 +204,32 @@
 <!-- End Midium Banner -->
 
 <!-- Start Most Popular -->
-<div class="product-area most-popular section">
-    <div class="container">
-        <div class="row">
+{{-- <div class="product-area most-popular section">
+    <div class="container"> --}}
+        {{-- <div class="row">
             <div class="col-12">
                 <div class="section-title">
                     <h2>Hot Item</h2>
                 </div>
             </div>
-        </div>
-        <div class="row">
+        </div> --}}
+        {{-- <div class="row">
             <div class="col-12">
                 <div class="owl-carousel popular-slider">
                     @foreach($product_lists as $product)
-                        @if($product->condition=='hot')
+                        @if($product->condition=='hot') --}}
                             <!-- Start Single Product -->
-                        <div class="single-product">
-                            <div class="product-img">
-                                <a href="{{route('product-detail',$product->slug)}}">
+                        {{-- <div class="single-product">
+                            <div class="product-img"> --}}
+                                {{-- <a href="{{route('product-detail',$product->slug)}}"> --}}
                                     @php
-                                        $photo=explode(',',$product->photo);
+                                        // $photo=explode(',',$product->photo);
                                     // dd($photo);
                                     @endphp
-                                    <img class="default-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
-                                    <img class="hover-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
+                                    {{-- <img class="default-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
+                                    <img class="hover-img" src="{{$photo[0]}}" alt="{{$photo[0]}}"> --}}
                                     {{-- <span class="out-of-stock">Hot</span> --}}
-                                </a>
+                                {{-- </a>
                                 <div class="button-head">
                                     <div class="product-action">
                                         <a data-toggle="modal" data-target="#{{$product->id}}" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
@@ -236,26 +243,26 @@
                             <div class="product-content">
                                 <h3><a href="{{route('product-detail',$product->slug)}}">{{$product->title}}</a></h3>
                                 <div class="product-price">
-                                    <span class="old">${{number_format($product->price,2)}}</span>
+                                    <span class="old">${{number_format($product->price,2)}}</span> --}}
                                     @php
-                                    $after_discount=($product->price-($product->price*$product->discount)/100)
+                                    // $after_discount=($product->price-($product->price*$product->discount)/100)
                                     @endphp
-                                    <span>${{number_format($after_discount,2)}}</span>
+                                    {{-- <span>${{number_format($after_discount,2)}}</span>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- End Single Product -->
-                        @endif
+                        {{-- @endif
                     @endforeach
                 </div>
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 <!-- End Most Popular Area -->
 
 <!-- Start Shop Home List  -->
-<section class="shop-home-list section">
+{{-- <section class="shop-home-list section">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-12">
@@ -266,22 +273,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row"> --}}
                     @php
-                        $product_lists=DB::table('products')->where('status','active')->orderBy('id','DESC')->limit(6)->get();
+                        // $product_lists=DB::table('products')->where('status','active')->orderBy('id','DESC')->limit(6)->get();
                     @endphp
-                    @foreach($product_lists as $product)
+                    {{-- @foreach($product_lists as $product)
                         <div class="col-md-4">
                             <!-- Start Single List  -->
                             <div class="single-list">
                                 <div class="row">
                                 <div class="col-lg-6 col-md-6 col-12">
-                                    <div class="list-image overlay">
+                                    <div class="list-image overlay"> --}}
                                         @php
-                                            $photo=explode(',',$product->photo);
+                                            // $photo=explode(',',$product->photo);
                                             // dd($photo);
                                         @endphp
-                                        <img src="{{$photo[0]}}" alt="{{$photo[0]}}">
+                                        {{-- <img src="{{$photo[0]}}" alt="{{$photo[0]}}">
                                         <a href="{{route('add-to-cart',$product->slug)}}" class="buy"><i class="fa fa-shopping-bag"></i></a>
                                     </div>
                                 </div>
@@ -292,20 +299,20 @@
                                     </div>
                                 </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <!-- End Single List  -->
-                        </div>
+                        {{-- </div>
                     @endforeach
 
                 </div>
             </div>
         </div>
     </div>
-</section>
+</section> --}}
 <!-- End Shop Home List  -->
 
 <!-- Start Shop Blog  -->
-<section class="shop-blog section">
+{{-- <section class="shop-blog section">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -317,28 +324,28 @@
         <div class="row">
             @if($posts)
                 @foreach($posts as $post)
-                    <div class="col-lg-4 col-md-6 col-12">
+                    <div class="col-lg-4 col-md-6 col-12"> --}}
                         <!-- Start Single Blog  -->
-                        <div class="shop-single-blog">
+                        {{-- <div class="shop-single-blog">
                             <img src="{{$post->photo}}" alt="{{$post->photo}}">
                             <div class="content">
                                 <p class="date">{{$post->created_at->format('d M , Y. D')}}</p>
                                 <a href="{{route('blog.detail',$post->slug)}}" class="title">{{$post->title}}</a>
                                 <a href="{{route('blog.detail',$post->slug)}}" class="more-btn">Continue Reading</a>
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- End Single Blog  -->
-                    </div>
-                @endforeach
+                    {{-- </div> --}}
+                {{-- @endforeach
             @endif
 
         </div>
     </div>
-</section>
+</section> --}}
 <!-- End Shop Blog  -->
 
 <!-- Start Shop Services Area  -->
-<section class="shop-services section home">
+{{-- <section class="shop-services section home">
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-6 col-12">
@@ -380,10 +387,10 @@
             </div>
         </div>
     </div>
-</section>
+</section> --}}
 <!-- End Shop Services Area -->
 
-@include('frontend.layouts.newsletter')
+{{-- @include('frontend.layouts.newsletter') --}}
 
 <!-- Modal -->
 @if($product_lists)

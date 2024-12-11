@@ -62,6 +62,17 @@
                 <td>Order Number</td>
                 <td> : {{ $order->order_number }}</td>
               </tr>
+
+              <tr>
+                <td>Product ID</td>
+                <td>: {{ $order->product_id ?? 'Product ID not found' }}</td>
+            </tr>
+            
+            
+            
+            
+            
+
               <tr>
                 <td>Order Date</td>
                 <td> : {{ $order->created_at->format('D d M, Y') }} at {{ $order->created_at->format('g : i a') }}</td>
@@ -74,10 +85,14 @@
                 <td>Order Status</td>
                 <td> : {{ $order->status }}</td>
               </tr>
+
               <tr>
                 <td>Total Amount</td>
                 <td> : Rp {{ number_format($order->total_amount, 2) }}</td>
-              </tr>
+            </tr>
+            
+            
+              
               <tr>
                 <td>Payment Method</td>
                 <td> : @if($order->payment_method == 'bayarditoko') Bayar Di Toko @else Transfer Bank @endif</td>

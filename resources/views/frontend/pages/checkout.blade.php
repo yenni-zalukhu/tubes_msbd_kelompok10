@@ -105,13 +105,13 @@
                                     <!-- Metode Pengiriman (only visible when 'Transfer Bank' is selected) -->
                                     <div id="shippingSection" class="col-lg-6 col-md-6 col-12" style="display: none;">
                                         <div class="form-group">
-                                            <label>Metode Pengiriman<span>*</span></label>
-                                            <select name="shipping" class="form-control" id="shipping" onchange="updateShippingCost()">
+                                            <label for="shipping_id">Metode Pengiriman<span>*</span></label>
+                                            <select name="shipping_id" class="form-control" id="shipping_id" onchange="updateShippingCost()">
                                                 <option value="">Pilih Metode Pengiriman</option>
                                                 @foreach(Helper::shipping() as $shipping)
                                                     <option value="{{$shipping->id}}" data-price="{{$shipping->price}}">
                                                         {{$shipping->type}}: Rp{{$shipping->price}}
-                                                    </option>
+                                                    </option>   
                                                 @endforeach
                                             </select>
                                         </div>
@@ -218,7 +218,7 @@
 
         // Function to update shipping cost when user selects shipping method
         function updateShippingCost() {
-            const shippingSelect = document.getElementById('shipping');
+            const shippingSelect = document.getElementById('shipping_id');
             const selectedOption = shippingSelect.options[shippingSelect.selectedIndex];
             const shippingPrice = selectedOption.getAttribute('data-price');
             document.getElementById('shippingCostValue').value = shippingPrice;

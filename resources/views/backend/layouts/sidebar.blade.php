@@ -246,7 +246,7 @@
                   <span>Settings</span></a>
           </li> --}}
       @elseif(Auth::check() && Auth::user()->role === 'kasir')
-          <li class="nav-item">
+          {{-- <li class="nav-item">
               <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#categoryCollapse"
                   aria-expanded="true" aria-controls="categoryCollapse">
                   <i class="fas fa-sitemap"></i>
@@ -260,14 +260,32 @@
                       <a class="collapse-item" href="{{ route('category.create') }}">Add Transaction</a>
                   </div>
               </div>
-          </li>
+          </li> --}}
           <!--Orders -->
+
           <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#categoryCollapse"
+                aria-expanded="true" aria-controls="categoryCollapse">
+                <i class="fas fa-sitemap"></i>
+                <span>Orders</span>
+            </a>
+            <div id="categoryCollapse" class="collapse" aria-labelledby="headingTwo"
+                data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Orders Options:</h6>
+                    <a class="collapse-item" href="{{ route('order.index') }}">Orders</a>
+                    <a class="collapse-item" href="{{ route('category.create') }}">Add Orders</a>
+                </div>
+            </div>
+        </li>
+
+          {{-- <li class="nav-item">
               <a class="nav-link" href="{{ route('order.index') }}">
                   <i class="fas fa-hammer fa-chart-area"></i>
                   <span>Orders</span>
               </a>
-          </li>
+              
+          </li> --}}
       @endif
       <!-- Sidebar Toggler (Sidebar) -->
       <div class="text-center d-none d-md-inline">

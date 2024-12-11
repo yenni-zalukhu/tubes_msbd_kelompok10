@@ -44,113 +44,57 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'first_name'=>'string|required',
-            'last_name'=>'string|required',
-            'address'=>'string|required',
-            // 'address2'=>'string|nullable',
-            'coupon'=>'nullable|numeric',
-            'phone'=>'numeric|required',
-            'post_code'=>'string|nullable',
-            'email'=>'string|required',
-            'shipping_id'=>'unsignedBigInteger|nullable'
+        $this->validate($request, [
+            'first_name' => 'string|required',
+            'last_name' => 'string|required',
+            'address' => 'string|required',
+            'phone' => 'numeric|required',
+            'email' => 'string|required',
+            'shipping_id' => 'required|exists:shippings,id',
+            
         ]);
-        // return $request->all();
-
-        if(empty(Cart::where('user_id',auth()->user()->id)->where('order_id',null)->first())){
-            request()->session()->flash('error','Cart is Empty !');
+    
+        if (empty(Cart::where('user_id', auth()->user()->id)->where('order_id', null)->first())) {
+            request()->session()->flash('error', 'Cart is Empty!');
             return back();
         }
-        // $cart=Cart::get();
-        // // return $cart;
-        // $cart_index='ORD-'.strtoupper(uniqid());
-        // $sub_total=0;
-        // foreach($cart as $cart_item){
-        //     $sub_total+=$cart_item['amount'];
-        //     $data=array(
-        //         'cart_id'=>$cart_index,
-        //         'user_id'=>$request->user()->id,
-        //         'product_id'=>$cart_item['id'],
-        //         'quantity'=>$cart_item['quantity'],
-        //         'amount'=>$cart_item['amount'],
-        //         'status'=>'new',
-        //         'price'=>$cart_item['price'],
-        //     );
-
-        //     $cart=new Cart();
-        //     $cart->fill($data);
-        //     $cart->save();
-        // }
-
-        // $total_prod=0;
-        // if(session('cart')){
-        //         foreach(session('cart') as $cart_items){
-        //             $total_prod+=$cart_items['quantity'];
-        //         }
-        // }
-
-        $order=new Order();
-        $order_data=$request->all();
-        $order_data['order_number']='ORD-'.strtoupper(Str::random(10));
-        $order_data['user_id']=$request->user()->id;
-        $order_data['shipping_id']=$request->shipping;
-        $shipping=Shipping::where('id',$order_data['shipping_id'])->pluck('price');
-        // return session('coupon')['value'];
-        $order_data['sub_total']=Helper::totalCartPrice();
-        $order_data['quantity']=Helper::cartCount();
-        if(session('coupon')){
-            $order_data['coupon']=session('coupon')['value'];
-        }
-        if($request->shipping){
-            if(session('coupon')){
-                $order_data['total_amount']=Helper::totalCartPrice()+$shipping[0]-session('coupon')['value'];
-            }
-            else{
-                $order_data['total_amount']=Helper::totalCartPrice()+$shipping[0];
-            }
-        }
-        else{
-            if(session('coupon')){
-                $order_data['total_amount']=Helper::totalCartPrice()-session('coupon')['value'];
-            }
-            else{
-                $order_data['total_amount']=Helper::totalCartPrice();
-            }
-        }
-        // return $order_data['total_amount'];
-        $order_data['status']="pending";
-        if(request('payment_method')=='transfer_bank'){
-            $order_data['payment_method']='transfer_bank';
-            $order_data['payment_status']='belum dibayar';
-        }
-        else{
-            $order_data['payment_method']='bayarditoko';
-            $order_data['payment_status']='belum dibayar';
-        }
-        $order->fill($order_data);
-        $status=$order->save();
-        if($order)
-        // dd($order->id);
-        $users=User::where('role','admin')->first();
-        $details=[
-            'title'=>'New order created',
-            'actionURL'=>route('order.show',$order->id),
-            'fas'=>'fa-file-alt'
-        ];
-        // Notification::send($users, new StatusNotification($details));
-        // if(request('payment_method')=='transfer_bank'){
-        //     return redirect()->route('index')->with(['id'=>$order->id]);
-        // }
-        // else{
-        //     session()->forget('cart');
-        //     session()->forget('coupon');
-        // }
+    
+        // Ambil data shipping cost
+        $shippingCost = Shipping::where('id', $request->shipping_id)->value('price') ?? 0;
+    
+        // Hitung subtotal dan total amount
+        $subTotal = Helper::totalCartPrice();
+        $totalAmount = $subTotal + $shippingCost;
+    
+        // Simpan data pesanan
+        $order = new Order();
+        $order->fill([
+            'product_id'=>$request->product_id,
+            'title'=>$request->title,
+            'user_id' => $request->user()->id,
+            'order_number' => 'ORD-' . strtoupper(Str::random(10)),
+            'sub_total' => $subTotal,
+            'shipping_id' => $request->shipping_id,
+            'quantity' => Helper::cartCount(),
+            'total_amount' => $totalAmount,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'status' => 'pending',
+            'payment_method' => $request->payment_method,
+            'payment_status' => 'belum dibayar',
+        ]);
+        $order->save();
+    
+        // Update cart dengan order_id
         Cart::where('user_id', auth()->user()->id)->where('order_id', null)->update(['order_id' => $order->id]);
-
-        // dd($users);        
-        request()->session()->flash('success','Your product successfully placed in order');
+    
+        request()->session()->flash('success', 'Your product successfully placed in order');
         return redirect()->route('home');
     }
+    
 
     public function showBankTransfer($id)
     {
@@ -188,10 +132,17 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order=Order::find($id);
-        // return $order;
-        return view('backend.order.show')->with('order',$order);
+        $order = Order::find($id);
+    
+        // Hitung shipping cost
+        $shippingCost = $order->shipping ? $order->shipping->price : 0;
+    
+        // Hitung total amount (subtotal + shipping)
+        $totalAmount = $order->sub_total + $shippingCost;
+    
+        return view('user.order.show', compact('order', 'shippingCost', 'totalAmount'));
     }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -299,14 +250,26 @@ class OrderController extends Controller
     }
 
     // PDF generate
-    public function pdf(Request $request){
-        $order=Order::getAllOrder($request->id);
-        // return $order;
-        $file_name=$order->order_number.'-'.$order->first_name.'.pdf';
-        // return $file_name;
-        $pdf=PDF::loadview('backend.order.pdf',compact('order'));
+    public function pdf(Request $request) {
+        set_time_limit(120);
+        $order = Order::getAllOrder($request->id);
+    
+        // Pastikan data shipping_cost diambil dengan benar
+        $shippingCost = $order->shipping ? $order->shipping->price : 0;
+    
+        // Periksa total_amount
+        $totalAmount = $order->sub_total + $shippingCost;
+    
+        // Debugging jika diperlukan
+        // dd($order->sub_total, $shippingCost, $totalAmount);
+    
+        $file_name = $order->order_number . '-' . $order->first_name . '.pdf';
+        $pdf = PDF::loadview('backend.order.pdf', compact('order', 'shippingCost', 'totalAmount'));
         return $pdf->download($file_name);
     }
+    
+    
+    
     // Income chart
     public function incomeChart(Request $request){
         $year=\Carbon\Carbon::now()->year;

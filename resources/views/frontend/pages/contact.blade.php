@@ -74,30 +74,30 @@
 								</form>
 							</div>
 						</div>
-						{{-- <div class="col-lg-4 col-12">
+						<div class="col-lg-4 col-12">
 							<div class="single-head">
 								<div class="single-info">
 									<i class="fa fa-phone"></i>
-									<h4 class="title">Call us Now:</h4>
+									<h4 class="title">Call us Now : 081275859306</h4>
 									<ul>
-										<li>@foreach($settings as $data) {{$data->phone}} @endforeach</li>
+										{{-- <li>@foreach($settings as $data) {{$data->phone}} @endforeach</li> --}}
 									</ul>
 								</div>
 								<div class="single-info">
 									<i class="fa fa-envelope-open"></i>
-									<h4 class="title">Email:</h4>
+									<h4 class="title">Email : anisacollection@gmail.com</h4>
 									<ul>
-										<li><a href="mailto:info@yourwebsite.com">@foreach($settings as $data) {{$data->email}} @endforeach</a></li>
+										{{-- <li><a href="mailto:info@yourwebsite.com">@foreach($settings as $data) {{$data->email}} @endforeach</a></li> --}}
 									</ul>
 								</div>
 								<div class="single-info">
 									<i class="fa fa-location-arrow"></i>
-									<h4 class="title">Our Address:</h4>
+									<h4 class="title">Our Address : Jl.Tanjung Raya no.9 P, Helvetia, Medan, Kota Medan, Sumatera Utara 20124</h4>
 									<ul>
-										<li>@foreach($settings as $data) {{$data->address}} @endforeach</li>
+										{{-- <li>@foreach($settings as $data) {{$data->address}} @endforeach</li> --}}
 									</ul>
 								</div>
-							</div> --}}
+							</div>
 						</div>
 					</div>
 				</div>
@@ -108,13 +108,13 @@
 	<!-- Map Section -->
 	<div class="map-section">
 		<div id="myMap">
-			<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14130.857353934944!2d85.36529494999999!3d27.6952226!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sne!2snp!4v1595323330171!5m2!1sne!2snp" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3981.9008305366774!2d98.6323740775744!3d3.6101618407952847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30312fc608f88629%3A0xb01596f22ef4ee0f!2sAnisa%20collection%20store!5e0!3m2!1sid!2sid!4v1733926491612!5m2!1sid!2sid" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 		</div>
 	</div>
 	<!--/ End Map Section -->
 	
 	<!-- Start Shop Newsletter  -->
-	@include('frontend.layouts.newsletter')
+	{{-- @include('frontend.layouts.newsletter') --}}
 	<!-- End Shop Newsletter -->
 	<!--================Contact Success  =================-->
 	<div class="modal fade" id="success" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

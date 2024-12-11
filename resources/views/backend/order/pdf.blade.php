@@ -59,7 +59,7 @@
     <div class="invoice-left-top float-left">
       <h6>Invoice to</h6>
       <h3>{{$order->first_name}} {{$order->last_name}}</h3>
-      <p><strong>Address:</strong> {{ $order->address1 }}</p>
+      <p><strong>Address:</strong> {{ $order->address }}</p>
       <p><strong>Phone:</strong> {{ $order->phone }}</p>
       <p><strong>Email:</strong> {{ $order->email }}</p>
     </div>
@@ -96,13 +96,23 @@
       </tbody>
       <tfoot>
         <tr>
-          <th colspan="2" class="text-right">Subtotal:</th>
-          <th>Rp{{number_format($order->sub_total,2)}}</th>
-        </tr>
-        <tr>
-          <th colspan="2" class="text-right">Total:</th>
-          <th>Rp{{number_format($order->total_amount,2)}}</th>
-        </tr>
+          <th scope="col" class="empty"></th>
+          <th scope="col" class="text-right">Subtotal:</th>
+          <th scope="col"><span>Rp{{ number_format($order->sub_total, 2) }}</span></th>
+      </tr>
+      <tr>
+          <th scope="col" class="empty"></th>
+          <th scope="col" class="text-right">Shipping:</th>
+          <th scope="col"><span>Rp{{ number_format($shippingCost, 2) }}</span></th>
+      </tr>
+      <tr>
+          <th scope="col" class="empty"></th>
+          <th scope="col" class="text-right">Total:</th>
+          <th scope="col">
+              <span>Rp{{ number_format($order->sub_total + $shippingCost, 2) }}</span>
+          </th>
+      </tr>
+      
       </tfoot>
     </table>
   </section>
