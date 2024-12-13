@@ -1,4 +1,4 @@
-@extends('backend.layouts.master')
+{{-- @extends('backend.layouts.master')
 @section('title','Anisa Collection Store || All Notifications')
 @section('main-content')
 <div class="card">
@@ -103,4 +103,4 @@
         })
     })
   </script>
-@endpush
+@endpush --}}

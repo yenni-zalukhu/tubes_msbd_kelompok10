@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Shipping;
 use App\User;
 use PDF;
@@ -33,8 +34,13 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        // Generate Order Number secara otomatis
+        $orderNumber = 'ORD-' . strtoupper(Str::random(10));
+    
+        // Kirim ke view
+        return view('backend.orders.create', compact('orderNumber'));
     }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -51,31 +57,44 @@ class OrderController extends Controller
             'phone' => 'numeric|required',
             'email' => 'string|required',
             'shipping_id' => 'required|exists:shippings,id',
-            
         ]);
     
-        if (empty(Cart::where('user_id', auth()->user()->id)->where('order_id', null)->first())) {
+        // Pastikan Cart tidak kosong
+        $cartItems = Cart::where('user_id', auth()->user()->id)->where('order_id', null)->get();
+        if ($cartItems->isEmpty()) {
             request()->session()->flash('error', 'Cart is Empty!');
             return back();
         }
     
-        // Ambil data shipping cost
+        // Cek ketersediaan stok untuk setiap produk dalam keranjang
+        foreach ($cartItems as $cartItem) {
+            $product = $cartItem->product;
+            
+            // Jika stok produk tidak mencukupi
+            if ($product->stock < $cartItem->quantity) {
+                request()->session()->flash('error', 'Stok untuk produk ' . $product->name . ' tidak mencukupi.');
+                return back();
+            }
+    
+            // Kurangi stok produk jika stok mencukupi
+            $product->stock -= $cartItem->quantity;
+            $product->save();
+        }
+    
+        // Ambil biaya pengiriman
         $shippingCost = Shipping::where('id', $request->shipping_id)->value('price') ?? 0;
     
-        // Hitung subtotal dan total amount
+        // Hitung subtotal dan total
         $subTotal = Helper::totalCartPrice();
         $totalAmount = $subTotal + $shippingCost;
     
-        // Simpan data pesanan
+        // Simpan data pesanan ke tabel orders
         $order = new Order();
         $order->fill([
-            'product_id'=>$request->product_id,
-            'title'=>$request->title,
             'user_id' => $request->user()->id,
             'order_number' => 'ORD-' . strtoupper(Str::random(10)),
             'sub_total' => $subTotal,
             'shipping_id' => $request->shipping_id,
-            'quantity' => Helper::cartCount(),
             'total_amount' => $totalAmount,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -88,12 +107,27 @@ class OrderController extends Controller
         ]);
         $order->save();
     
-        // Update cart dengan order_id
+        // Simpan setiap item dari Cart ke tabel order_items
+        foreach ($cartItems as $cartItem) {
+            $orderItem = new OrderItem();
+            $orderItem->fill([
+                'order_id' => $order->id,
+                'product_id' => $cartItem->product_id,
+                'quantity' => $cartItem->quantity,
+                'unit_price' => $cartItem->price,
+                'subtotal' => $cartItem->quantity * $cartItem->price,
+            ]);
+            $orderItem->save();
+        }
+    
+        // Update Cart dengan order_id yang baru dibuat
         Cart::where('user_id', auth()->user()->id)->where('order_id', null)->update(['order_id' => $order->id]);
     
         request()->session()->flash('success', 'Your product successfully placed in order');
         return redirect()->route('home');
     }
+    
+    
     
 
     public function showBankTransfer($id)
@@ -132,7 +166,11 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = Order::find($id);
+        $order = Order::with('orderItems.product')->find($id);
+    
+        if (!$order) {
+            return redirect()->back()->with('error', 'Order not found');
+        }
     
         // Hitung shipping cost
         $shippingCost = $order->shipping ? $order->shipping->price : 0;
@@ -142,6 +180,7 @@ class OrderController extends Controller
     
         return view('user.order.show', compact('order', 'shippingCost', 'totalAmount'));
     }
+    
     
 
     /**

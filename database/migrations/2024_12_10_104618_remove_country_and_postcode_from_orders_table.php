@@ -8,19 +8,19 @@ class RemoveCountryAndPostcodeFromOrdersTable extends Migration
 {
     public function up()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            // Menghapus kolom country dan post_code
-            $table->dropColumn('country');
-            $table->dropColumn('post_code');
-        });
+        // Schema::table('orders', function (Blueprint $table) {
+        //     // Menghapus kolom country dan post_code
+        //     $table->dropColumn('country');
+        //     $table->dropColumn('post_code');
+        // });
     }
 
     public function down()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            // Menambahkan kembali kolom country dan post_code jika dibutuhkan
-            $table->string('country')->nullable();
-            $table->string('post_code')->nullable();
-        });
+        // Schema::table('orders', function (Blueprint $table) {
+        //     // Menambahkan kembali kolom country dan post_code jika dibutuhkan
+        //     $table->string('country')->nullable();
+        //     $table->string('post_code')->nullable();
+        // });
     }
 }

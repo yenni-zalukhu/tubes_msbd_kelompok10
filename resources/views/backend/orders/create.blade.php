@@ -7,19 +7,46 @@
   <div class="card-body">
     <form method="post" action="{{ route('orders.store') }}" enctype="multipart/form-data">
       @csrf
+<!-- Order Number -->
+<div class="form-group">
+  <label for="order_number" class="col-form-label">Order Number <span class="text-danger">*</span></label>
+  <input id="order_number" type="text" name="order_number" value="{{ old('order_number', $orderNumber) }}" class="form-control" readonly>
+</div>
 
-      <!-- Order Number -->
-      <div class="form-group">
-        <label for="order_number" class="col-form-label">Order Number <span class="text-danger">*</span></label>
-        <input id="order_number" type="text" name="order_number" placeholder="Enter order number" value="{{ old('order_number') }}" class="form-control">
-        @error('order_number') <span class="text-danger">{{ $message }}</span> @enderror
-      </div>
 
-      <!-- Product ID -->
+      <!-- Produk -->
       <div class="form-group">
-        <label for="product_id" class="col-form-label">Product ID</label>
-        <input id="product_id" type="number" name="product_id" placeholder="Enter product ID" value="{{ old('product_id') }}" class="form-control">
+        <label for="product_id" class="col-form-label">Produk <span class="text-danger">*</span></label>
+        <div>
+          @foreach($products as $product)
+          <div class="d-flex align-items-center mb-2">
+            <!-- Checkbox untuk memilih produk -->
+            <input 
+              type="checkbox" 
+              id="product_{{ $product->id }}" 
+              name="product_id[]" 
+              value="{{ $product->id }}" 
+              {{ (is_array(old('product_id')) && in_array($product->id, old('product_id'))) ? 'checked' : '' }}>
+
+            <!-- Label Produk -->
+            <label for="product_{{ $product->id }}" class="ml-2" style="flex: 1; margin-left: 10px;">
+              {{ $product->title }} - Rp{{ number_format($product->price, 0, ',', '.') }}
+            </label>
+
+            <!-- Input untuk quantity -->
+            <input 
+              type="number" 
+              name="quantity[{{ $product->id }}]" 
+              placeholder="Qty" 
+              value="{{ old('quantity.' . $product->id) }}" 
+              class="form-control" 
+              style="width: 100px; margin-left: 20px; text-align: center;" 
+              min="1">
+          </div>
+          @endforeach
+        </div>
         @error('product_id') <span class="text-danger">{{ $message }}</span> @enderror
+        @error('quantity') <span class="text-danger">{{ $message }}</span> @enderror
       </div>
 
       <!-- Sub Total -->
@@ -34,13 +61,6 @@
         <label for="total_amount" class="col-form-label">Total Amount <span class="text-danger">*</span></label>
         <input id="total_amount" type="number" step="0.01" name="total_amount" placeholder="Enter total amount" value="{{ old('total_amount') }}" class="form-control">
         @error('total_amount') <span class="text-danger">{{ $message }}</span> @enderror
-      </div>
-
-      <!-- Quantity -->
-      <div class="form-group">
-        <label for="quantity" class="col-form-label">Quantity <span class="text-danger">*</span></label>
-        <input id="quantity" type="number" name="quantity" placeholder="Enter quantity" value="{{ old('quantity') }}" class="form-control">
-        @error('quantity') <span class="text-danger">{{ $message }}</span> @enderror
       </div>
 
       <!-- Payment Method -->

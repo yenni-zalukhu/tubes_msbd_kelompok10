@@ -13,13 +13,13 @@ class CreatePostCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('post_categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->string('slug')->unique();
-            $table->enum('status',['active','inactive'])->default('active');
-            $table->timestamps();
-        });
+        // Schema::create('post_categories', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('title');
+        //     $table->string('slug')->unique();
+        //     $table->enum('status',['active','inactive'])->default('active');
+        //     $table->timestamps();
+        // });
     }
 
     /**
@@ -29,6 +29,6 @@ class CreatePostCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_categories');
+        // Schema::dropIfExists('post_categories');
     }
 }

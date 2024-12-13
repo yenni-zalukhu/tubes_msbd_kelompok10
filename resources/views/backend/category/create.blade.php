@@ -53,7 +53,7 @@
           </div>
 
           <!-- Parent Category -->
-          <div class="form-group">
+          {{-- <div class="form-group">
               <label for="parent_id" class="col-form-label">Parent Category</label>
               <select name="parent_id" class="form-control">
                   <option value="">Select Parent Category</option>
@@ -66,16 +66,16 @@
               @error('parent_id')
                   <span class="text-danger">{{ $message }}</span>
               @enderror
-          </div>
+          </div> --}}
 
           <!-- Is Parent (Checkbox) -->
-          <div class="form-group">
+          {{-- <div class="form-group">
               <label for="is_parent" class="col-form-label">Is Parent Category?</label>
               <input type="checkbox" name="is_parent" value="1" {{ old('is_parent') == 1 ? 'checked' : '' }} class="form-check-input">
               @error('is_parent')
                   <span class="text-danger">{{ $message }}</span>
               @enderror
-          </div>
+          </div> --}}
 
           <!-- Status -->
           <div class="form-group">

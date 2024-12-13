@@ -16,16 +16,16 @@
           @enderror
         </div>
 
-        <div class="form-group">
+        {{-- <div class="form-group">
           <label for="summary" class="col-form-label">Summary <span class="text-danger">*</span></label>
           <textarea class="form-control" id="summary" name="summary">{{$product->summary}}</textarea>
           @error('summary')
           <span class="text-danger">{{$message}}</span>
           @enderror
-        </div>
+        </div> --}}
 
         <div class="form-group">
-          <label for="description" class="col-form-label">Description</label>
+          <label for="description" class="col-form-label">Description<span class="text-danger">*</span></label>
           <textarea class="form-control" id="description" name="description">{{$product->description}}</textarea>
           @error('description')
           <span class="text-danger">{{$message}}</span>
@@ -33,10 +33,10 @@
         </div>
 
 
-        <div class="form-group">
+        {{-- <div class="form-group">
           <label for="is_featured">Is Featured</label><br>
           <input type="checkbox" name='is_featured' id='is_featured' value='{{$product->is_featured}}' {{(($product->is_featured) ? 'checked' : '')}}> Yes                        
-        </div>
+        </div> --}}
               {{-- {{$categories}} --}}
 
         <div class="form-group">
@@ -49,18 +49,18 @@
           </select>
         </div>
         @php 
-          $sub_cat_info=DB::table('categories')->select('title')->where('id',$product->child_cat_id)->get();
+          $sub_cat_info=DB::table('categories')->select('title')->where('id',$product->cat_id)->get();
         // dd($sub_cat_info);
 
         @endphp
         {{-- {{$product->child_cat_id}} --}}
-        <div class="form-group {{(($product->child_cat_id)? '' : 'd-none')}}" id="child_cat_div">
+        {{-- <div class="form-group {{(($product->child_cat_id)? '' : 'd-none')}}" id="child_cat_div">
           <label for="child_cat_id">Sub Category</label>
           <select name="child_cat_id" id="child_cat_id" class="form-control">
               <option value="">--Select any sub category--</option>
               
           </select>
-        </div>
+        </div> --}}
 
         <div class="form-group">
           <label for="price" class="col-form-label">Price(NRS) <span class="text-danger">*</span></label>
@@ -168,13 +168,13 @@
 <script>
     $('#lfm').filemanager('image');
 
-    $(document).ready(function() {
-    $('#summary').summernote({
-      placeholder: "Write short description.....",
-        tabsize: 2,
-        height: 150
-    });
-    });
+    // $(document).ready(function() {
+    // $('#summary').summernote({
+    //   placeholder: "Write short description.....",
+    //     tabsize: 2,
+    //     height: 150
+    // });
+    // });
     $(document).ready(function() {
       $('#description').summernote({
         placeholder: "Write detail Description.....",

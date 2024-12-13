@@ -21,7 +21,6 @@
               <th>S.N.</th>
               <th>Title</th>
               <th>Category</th>
-              <th>Is Featured</th>
               <th>Price</th>
               <th>Discount</th>
               <th>Size</th>
@@ -38,7 +37,6 @@
               <th>S.N.</th>
               <th>Title</th>
               <th>Category</th>
-              <th>Is Featured</th>
               <th>Price</th>
               <th>Discount</th>
               <th>Size</th>
@@ -54,7 +52,7 @@
 
             @foreach($products as $product)
               @php
-              $sub_cat_info=DB::table('categories')->select('title')->where('id',$product->child_cat_id)->get();
+              $sub_cat_info=DB::table('categories')->select('title')->where('id',$product->cat_id)->get();
               // dd($sub_cat_info);
               $brands=DB::table('brands')->select('title')->where('id',$product->brand_id)->get();
               @endphp
@@ -66,7 +64,7 @@
                           {{$product->sub_cat_info->title ?? ''}}
                       </sub>
                     </td>
-                    <td>{{(($product->is_featured==1)? 'Yes': 'No')}}</td>
+                    {{-- <td>{{(($product->is_featured==1)? 'Yes': 'No')}}</td> --}}
                     <td>Rs. {{$product->price}} /-</td>
                     <td>  {{$product->discount}}% OFF</td>
                     <td>{{$product->size}}</td>

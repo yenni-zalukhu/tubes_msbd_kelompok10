@@ -3,7 +3,7 @@
 @section('title','Comment Edit')
 
 @section('main-content')
-<div class="card">
+{{-- <div class="card">
   <h5 class="card-header">Comment Edit</h5>
   <div class="card-body">
     <form action="{{route('user.post-comment.update',$comment->id)}}" method="POST">
@@ -28,7 +28,7 @@
       <button type="submit" class="btn btn-primary">Update</button>
     </form>
   </div>
-</div>
+</div> --}}
 @endsection
 
 @push('styles')

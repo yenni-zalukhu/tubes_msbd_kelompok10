@@ -42,7 +42,7 @@
                 <tr>
                     <td>{{$comment->id}}</td>
                     <td>{{$comment->user_info['name']}}</td>
-                    <td>{{$comment->post->title}}</td>
+                    {{-- <td>{{$comment->post->title}}</td> --}}
                     <td>{{$comment->comment}}</td>
                     <td>{{$comment->created_at->format('M d D, Y g: i a')}}</td>
                     <td>
@@ -52,14 +52,14 @@
                           <span class="badge badge-warning">{{$comment->status}}</span>
                         @endif
                     </td>
-                    <td>
+                    {{-- <td>
                         <a href="{{route('user.post-comment.edit',$comment->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
                         <form method="POST" action="{{route('user.post-comment.delete',[$comment->id])}}">
                           @csrf
                           @method('delete')
                               <button class="btn btn-danger btn-sm dltBtn" data-id={{$comment->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
                         </form>
-                    </td>
+                    </td> --}}
                 </tr>
             @endforeach
           </tbody>

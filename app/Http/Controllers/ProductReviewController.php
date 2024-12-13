@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-use Notification;
-use App\Notifications\StatusNotification;
+// use Notification;
+// use App\Notifications\StatusNotification;
 use App\User;
 use App\Models\ProductReview;
 class ProductReviewController extends Controller
@@ -59,7 +59,7 @@ class ProductReviewController extends Controller
             'actionURL'=>route('product-detail',$product_info->slug),
             'fas'=>'fa-star'
         ];
-        Notification::send($user,new StatusNotification($details));
+        // Notification::send($user,new StatusNotification($details));
         if($status){
             request()->session()->flash('success','Thank you for your feedback');
         }

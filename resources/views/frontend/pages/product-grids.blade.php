@@ -32,9 +32,9 @@
                                 <div class="single-widget category">
                                     <h3 class="title">Categories</h3>
                                     <ul class="categor-list">
-										@php
+										{{-- @php
 											// $category = new Category();
-											$menu=App\Models\Category::getAllParentWithChild();
+											// $menu=App\Models\Category::getAllParentWithChild();
 										@endphp
 										@if($menu)
 										<li>
@@ -52,7 +52,7 @@
 													@endif
 											@endforeach
 										</li>
-										@endif
+										@endif --}}
                                         {{-- @foreach(Helper::productCategoryList('products') as $cat)
                                             @if($cat->is_parent==1)
 												<li><a href="{{route('product-cat',$cat->slug)}}">{{$cat->title}}</a></li>

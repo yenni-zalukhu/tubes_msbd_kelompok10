@@ -27,9 +27,10 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $parent_cats=Category::where('is_parent',1)->orderBy('title','ASC')->get();
-        return view('backend.category.create')->with('parent_cats',$parent_cats);
+        $parent_cats = Category::all();
+        return view('backend.category.create')->with('parent_cats', $parent_cats);
     }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -45,9 +46,8 @@ class CategoryController extends Controller
             'summary'=>'string|nullable',
             'photo'=>'string|nullable',
             'status'=>'required|in:active,inactive',
-            'is_parent'=>'sometimes|in:1',
-            'parent_id'=>'nullable|exists:categories,id',
         ]);
+        
         $data= $request->all();
         $slug=Str::slug($request->title);
         $count=Category::where('slug',$slug)->count();
@@ -55,7 +55,7 @@ class CategoryController extends Controller
             $slug=$slug.'-'.date('ymdis').'-'.rand(0,999);
         }
         $data['slug']=$slug;
-        $data['is_parent']=$request->input('is_parent',0);
+        // $data['is_parent']=$request->input('is_parent',0);
         // return $data;   
         $status=Category::create($data);
         if($status){
@@ -88,7 +88,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $parent_cats=Category::where('is_parent',1)->get();
+$parent_cats = Category::all();
         $category=Category::findOrFail($id);
         return view('backend.category.edit')->with('category',$category)->with('parent_cats',$parent_cats);
     }
@@ -109,11 +109,10 @@ class CategoryController extends Controller
             'summary'=>'string|nullable',
             'photo'=>'string|nullable',
             'status'=>'required|in:active,inactive',
-            'is_parent'=>'sometimes|in:1',
-            'parent_id'=>'nullable|exists:categories,id',
+
         ]);
         $data= $request->all();
-        $data['is_parent']=$request->input('is_parent',0);
+        // $data['is_parent']=$request->input('is_parent',0);
         // return $data;
         $status=$category->fill($data)->save();
         if($status){

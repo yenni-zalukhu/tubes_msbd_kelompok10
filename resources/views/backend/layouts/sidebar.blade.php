@@ -140,12 +140,12 @@
           </li>
 
           <!--Orders -->
-          <li class="nav-item">
+          {{-- <li class="nav-item">
               <a class="nav-link" href="{{ route('order.index') }}">
                   <i class="fas fa-hammer fa-chart-area"></i>
                   <span>Orders</span>
               </a>
-          </li>
+          </li> --}}
 
           <!-- Reviews -->
           <li class="nav-item">
@@ -159,11 +159,11 @@
           <hr class="sidebar-divider">
 
           <!-- Heading -->
-          <div class="sidebar-heading">
+          {{-- <div class="sidebar-heading">
               Posts
-          </div>
+          </div> --}}
 
-          <!-- Posts -->
+          {{-- <!-- Posts -->
           <li class="nav-item">
               <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#postCollapse"
                   aria-expanded="true" aria-controls="postCollapse">
@@ -178,10 +178,10 @@
                       <a class="collapse-item" href="{{ route('post.create') }}">Add Post</a>
                   </div>
               </div>
-          </li>
+          </li> --}}
 
           <!-- Category -->
-          <li class="nav-item">
+          {{-- <li class="nav-item">
               <a class="nav-link collapsed" href="#" data-toggle="collapse"
                   data-target="#postCategoryCollapse" aria-expanded="true" aria-controls="postCategoryCollapse">
                   <i class="fas fa-sitemap fa-folder"></i>
@@ -195,10 +195,10 @@
                       <a class="collapse-item" href="{{ route('post-category.create') }}">Add Category</a>
                   </div>
               </div>
-          </li>
+          </li> --}}
 
           <!-- Tags -->
-          <li class="nav-item">
+          {{-- <li class="nav-item">
               <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#tagCollapse"
                   aria-expanded="true" aria-controls="tagCollapse">
                   <i class="fas fa-tags fa-folder"></i>
@@ -211,15 +211,15 @@
                       <a class="collapse-item" href="{{ route('post-tag.create') }}">Add Tag</a>
                   </div>
               </div>
-          </li>
+          </li> --}}
 
           <!-- Comments -->
-          <li class="nav-item">
+          {{-- <li class="nav-item">
               <a class="nav-link" href="{{ route('comment.index') }}">
                   <i class="fas fa-comments fa-chart-area"></i>
                   <span>Comments</span>
               </a>
-          </li>
+          </li> --}}
 
 
           <!-- Divider -->
@@ -228,11 +228,11 @@
           <div class="sidebar-heading">
               General Settings
           </div>
-          <li class="nav-item">
+          {{-- <li class="nav-item">
               <a class="nav-link" href="{{ route('coupon.index') }}">
                   <i class="fas fa-table"></i>
                   <span>Coupon</span></a>
-          </li>
+          </li> --}}
           <!-- Users -->
           <li class="nav-item">
               <a class="nav-link" href="{{ route('users.index') }}">
@@ -274,8 +274,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Orders Options:</h6>
                     <a class="collapse-item" href="{{ route('order.index') }}">Orders</a>
-                    <a class="collapse-item" href="{{ route('category.create') }}">Add Orders</a>
-                </div>
+                    <a class="collapse-item" href="{{ route('orders.create') }}">Add Orders</a>                </div>
             </div>
         </li>
 

@@ -10,7 +10,7 @@
     use App\Http\Controllers\WishlistController;
     use App\Http\Controllers\OrderController;
     use App\Http\Controllers\ProductReviewController;
-    use App\Http\Controllers\PostCommentController;
+    use App\Http\Controllers\OrderOfflineController;
     use App\Http\Controllers\CouponController;
     use App\Http\Controllers\PayPalController;
     use App\Http\Controllers\NotificationController;
@@ -133,8 +133,8 @@ Route::post('/order/verify-payment/{id}', [OrderController::class, 'verifyPaymen
         Route::post('product/{slug}/review', [ProductReviewController::class, 'store'])->name('review.store');
 
     // Post Comment
-        Route::post('post/{slug}/comment', [PostCommentController::class, 'store'])->name('post-comment.store');
-        Route::resource('/comment', 'PostCommentController');
+        // Route::post('post/{slug}/comment', [PostCommentController::class, 'store'])->name('post-comment.store');
+        // Route::resource('/comment', 'PostCommentController');
     // Coupon
         Route::post('/coupon-store', [CouponController::class, 'couponStore'])->name('coupon-store');
     // Payment
@@ -167,12 +167,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
         Route::resource('/product', 'ProductController');
         // Ajax for sub category
         Route::post('/category/{id}/child', 'CategoryController@getChildByParent');
-        // POST category
-        Route::resource('/post-category', 'PostCategoryController');
-        // Post tag
-        Route::resource('/post-tag', 'PostTagController');
-        // Post
-        Route::resource('/post', 'PostController');
+
         // Message
         Route::resource('/message', 'MessageController');
         Route::get('/message/five', [MessageController::class, 'messageFive'])->name('messages.five');
@@ -181,7 +176,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
             // Order
             // Route::resource('/order', 'OrderController');
             // // Shipping
-            // Route::resource('/shipping', 'ShippingController');
+            Route::resource('/shipping', 'ShippingController');
             // Coupon
             Route::resource('/coupon', 'CouponController');
             // // Settings
@@ -257,7 +252,16 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
     Route::get('/transaction/{id}', [TransactionController::class, 'show'])->name('transaction.show');
 
 
+      // Order
+      Route::resource('/order', 'OrderController');
 
+      //order offline
+      Route::resource('/orders', 'OrderOfflineController');
+
+      Route::get('/orders/pdf/{id}', [OrderOfflineController::class, 'pdf'])->name('orders.pdf');
+
+      // Shipping
+    //   Route::resource('/shipping', 'ShippingController');
 
 
 
@@ -303,10 +307,8 @@ Route::resource('customers', CustomerController::class);
         // Route::resource('/message', 'MessageController');
         // Route::get('/message/five', [MessageController::class, 'messageFive'])->name('messages.five');
 
-        // Order
-        Route::resource('/order', 'OrderController');
-        // Shipping
-        Route::resource('/shipping', 'ShippingController');
+
+
         // Coupon
         // Route::resource('/coupon', 'CouponController');
         // Settings

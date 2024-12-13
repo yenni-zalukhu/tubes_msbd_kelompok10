@@ -32,11 +32,11 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $brand=Brand::get();
-        $category=Category::where('is_parent',1)->get();
-        // return $category;
-        return view('backend.product.create')->with('categories',$category)->with('brands',$brand);
+        $brand = Brand::get();
+        $category = Category::all(); // Mengambil semua kategori
+        return view('backend.product.create')->with('categories', $category)->with('brands', $brand);
     }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -49,15 +49,14 @@ class ProductController extends Controller
         // return $request->all();
         $this->validate($request,[
             'title'=>'string|required',
-            'summary'=>'string|required',
-            'description'=>'string|nullable',
+            // 'summary'=>'string|required',
+            'description'=>'string|required',
             'photo'=>'string|required',
             'size'=>'nullable',
             'stock'=>"required|numeric",
             'cat_id'=>'required|exists:categories,id',
             'brand_id'=>'nullable|exists:brands,id',
-            'child_cat_id'=>'nullable|exists:categories,id',
-            'is_featured'=>'sometimes|in:1',
+            // 'child_cat_id'=>'nullable|exists:categories,id',
             'status'=>'required|in:active,inactive',
             'condition'=>'required|in:default,new,hot',
             'price'=>'required|numeric',
@@ -71,7 +70,7 @@ class ProductController extends Controller
             $slug=$slug.'-'.date('ymdis').'-'.rand(0,999);
         }
         $data['slug']=$slug;
-        $data['is_featured']=$request->input('is_featured',0);
+        // $data['is_featured']=$request->input('is_featured',0);
         $size=$request->input('size');
         if($size){
             $data['size']=implode(',',$size);
@@ -113,7 +112,7 @@ class ProductController extends Controller
     {
         $brand=Brand::get();
         $product=Product::findOrFail($id);
-        $category=Category::where('is_parent',1)->get();
+        $category = Category::all(); // Mengambil semua kategori
         $items=Product::where('id',$id)->get();
         // return $items;
         return view('backend.product.edit')->with('product',$product)
@@ -133,14 +132,14 @@ class ProductController extends Controller
         $product=Product::findOrFail($id);
         $this->validate($request,[
             'title'=>'string|required',
-            'summary'=>'string|required',
-            'description'=>'string|nullable',
+            // 'summary'=>'string|required',
+            'description'=>'string|required',
             'photo'=>'string|required',
             'size'=>'nullable',
             'stock'=>"required|numeric",
             'cat_id'=>'required|exists:categories,id',
-            'child_cat_id'=>'nullable|exists:categories,id',
-            'is_featured'=>'sometimes|in:1',
+            // 'child_cat_id'=>'nullable|exists:categories,id',
+            // 'is_featured'=>'sometimes|in:1',
             'brand_id'=>'nullable|exists:brands,id',
             'status'=>'required|in:active,inactive',
             'condition'=>'required|in:default,new,hot',
@@ -149,7 +148,7 @@ class ProductController extends Controller
         ]);
 
         $data=$request->all();
-        $data['is_featured']=$request->input('is_featured',0);
+        // $data['is_featured']=$request->input('is_featured',0);
         $size=$request->input('size');
         if($size){
             $data['size']=implode(',',$size);

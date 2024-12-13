@@ -33,4 +33,24 @@ class Order extends Model
         return $this->belongsTo('App\User', 'user_id');
     }
 
+// Di model Order
+public function products()
+{
+    return $this->belongsToMany(Product::class, 'order_product');
+}
+
+// Di model Product
+public function orders()
+{
+    return $this->belongsToMany(Order::class, 'order_product');
+}
+
+
+public function orderItems()
+{
+    return $this->hasMany(OrderItem::class, 'order_id', 'id');
+}
+
+
+
 }

@@ -30,7 +30,7 @@
             <tr>
               <th>S.N.</th>
               <th>Author</th>
-              <th>Post Title</th>
+              {{-- <th>Post Title</th> --}}
               <th>Message</th>
               <th>Date</th>
               <th>Status</th>
@@ -42,7 +42,7 @@
                 <tr>
                     <td>{{$comment->id}}</td>
                     <td>{{$comment->user_info['name']}}</td>
-                    <td>{{$comment->post->title}}</td>
+                    {{-- <td>{{$comment->post->title}}</td> --}}
                     <td>{{$comment->comment}}</td>
                     <td>{{$comment->created_at->format('M d D, Y g: i a')}}</td>
                     <td>
@@ -64,7 +64,7 @@
             @endforeach
           </tbody>
         </table>
-        <span style="float:right">{{$comments->links()}}</span>
+        {{-- <span style="float:right">{{$comments->links()}}</span> --}}
         @else
           <h6 class="text-center">No post comments found!!!</h6>
         @endif
