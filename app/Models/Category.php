@@ -49,10 +49,10 @@ class Category extends Model
     public function products(){
         return $this->hasMany('App\Models\Product', 'cat_id', 'id')->where('status', 'active');
     }
-
     public function sub_products(){
-        return $this->hasMany('App\Models\Product', 'child_cat_id', 'id')->where('status', 'active');
+        return $this->hasMany('App\Models\Product', 'id', 'id')->where('status', 'active');
     }
+    
 
     // Fungsi getProductByCat dan getProductBySubCat tidak terpengaruh
     public static function getProductByCat($slug){
