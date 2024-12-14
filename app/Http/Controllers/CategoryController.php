@@ -132,22 +132,23 @@ $parent_cats = Category::all();
      */
     public function destroy($id)
     {
-        $category=Category::findOrFail($id);
-        $child_cat_id=Category::where('parent_id',$id)->pluck('id');
-        // return $child_cat_id;
-        $status=$category->delete();
+        $category = Category::findOrFail($id);
         
-        if($status){
-            if(count($child_cat_id)>0){
-                Category::shiftChild($child_cat_id);
-            }
-            request()->session()->flash('success','Category successfully deleted');
+        // Hapus bagian yang bergantung pada parent_id karena kolom tersebut sudah dihapus
+        // Tidak ada lagi relasi berdasarkan parent_id, sehingga kita tidak perlu mendefinisikan $child_cat_id
+        $status = $category->delete();
+        
+        if ($status) {
+            // Jika sebelumnya Anda menggunakan $child_cat_id, Anda bisa menghapus logika ini sepenuhnya
+            // Tidak ada kategori anak untuk diproses, jadi bagian ini dihilangkan
+            request()->session()->flash('success', 'Category successfully deleted');
+        } else {
+            request()->session()->flash('error', 'Error while deleting category');
         }
-        else{
-            request()->session()->flash('error','Error while deleting category');
-        }
+        
         return redirect()->route('category.index');
     }
+    
 
     public function getChildByParent(Request $request){
         // return $request->all();

@@ -7,8 +7,8 @@ public function store(Request $request)
             // 'summary'=>'string|nullable',
             'photo'=>'string|nullable',
             'status'=>'required|in:active,inactive',
-            'is_parent'=>'sometimes|in:1',
-            'parent_id'=>'nullable|exists:categories,id',
+            // 'is_parent'=>'sometimes|in:1',
+            // 'parent_id'=>'nullable|exists:categories,id',
         ]);
         $data= $request->all();
         $slug=Str::slug($request->title);

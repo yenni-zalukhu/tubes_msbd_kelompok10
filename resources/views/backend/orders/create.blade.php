@@ -22,11 +22,12 @@
           <div class="d-flex align-items-center mb-2">
             <!-- Checkbox untuk memilih produk -->
             <input 
-              type="checkbox" 
-              id="product_{{ $product->id }}" 
-              name="product_id[]" 
-              value="{{ $product->id }}" 
-              {{ (is_array(old('product_id')) && in_array($product->id, old('product_id'))) ? 'checked' : '' }}>
+    type="checkbox" 
+    id="product_{{ $product->id }}" 
+    name="product_id[]" 
+    value="{{ $product->id }}" 
+    {{ (is_array(old('product_id')) && in_array($product->id, old('product_id'))) ? 'checked' : '' }}>
+
 
             <!-- Label Produk -->
             <label for="product_{{ $product->id }}" class="ml-2" style="flex: 1; margin-left: 10px;">

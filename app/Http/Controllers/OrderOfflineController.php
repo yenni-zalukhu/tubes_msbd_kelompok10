@@ -35,9 +35,10 @@ class OrderOfflineController extends Controller
             'order_number' => 'required|string|max:255',
             'product_id' => 'required|array', // Pastikan product_id adalah array
             'product_id.*' => 'integer|exists:products,id', // Validasi ID produk
-            'quantity' => 'array', // Quantity harus berupa array
+            'quantity' => 'required|array', // Quantity harus berupa array
+            'quantity.*' => 'nullable|integer|min:1', // Quantity minimal 1
         ]);
-    
+        
         // Validasi conditional: Quantity harus ada jika produk dipilih
         foreach ($request->product_id as $productId) {
             if (empty($request->quantity[$productId]) || $request->quantity[$productId] < 1) {
@@ -46,6 +47,7 @@ class OrderOfflineController extends Controller
                     ->withInput();
             }
         }
+        
     
         // Simpan data order ke database
         $order = Order::create([
