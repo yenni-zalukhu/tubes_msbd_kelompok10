@@ -50,51 +50,48 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        // Validasi umum yang berlaku untuk semua metode pembayaran
         $this->validate($request, [
             'first_name' => 'string|required',
             'last_name' => 'string|required',
             'address' => 'string|required',
             'phone' => 'numeric|required',
             'email' => 'string|required',
-            'shipping_id' => 'required|exists:shippings,id',
         ]);
+    
+        // Validasi spesifik berdasarkan metode pembayaran
+        if ($request->payment_method === 'transfer_bank') {
+            $this->validate($request, [
+                'shipping_id' => 'required|exists:shippings,id',
+            ]);
+        } elseif ($request->payment_method === 'bayarditoko') {
+            $this->validate($request, [
+                'pickup_date' => 'required|date|after_or_equal:today',
+            ]);
+        }
     
         // Pastikan Cart tidak kosong
         $cartItems = Cart::where('user_id', auth()->user()->id)->where('order_id', null)->get();
         if ($cartItems->isEmpty()) {
-            request()->session()->flash('error', 'Cart is Empty!');
-            return back();
+            return back()->with('error', 'Cart is empty!');
         }
-    
-        // Cek ketersediaan stok untuk setiap produk dalam keranjang
-        foreach ($cartItems as $cartItem) {
-            $product = $cartItem->product;
-            
-            // Jika stok produk tidak mencukupi
-            if ($product->stock < $cartItem->quantity) {
-                request()->session()->flash('error', 'Stok untuk produk ' . $product->name . ' tidak mencukupi.');
-                return back();
-            }
-    
-            // Kurangi stok produk jika stok mencukupi
-            $product->stock -= $cartItem->quantity;
-            $product->save();
-        }
-    
-        // Ambil biaya pengiriman
-        $shippingCost = Shipping::where('id', $request->shipping_id)->value('price') ?? 0;
     
         // Hitung subtotal dan total
         $subTotal = Helper::totalCartPrice();
+        $shippingCost = 0;
+    
+        if ($request->payment_method === 'transfer_bank') {
+            $shippingCost = Shipping::where('id', $request->shipping_id)->value('price') ?? 0;
+        }
+    
         $totalAmount = $subTotal + $shippingCost;
     
         // Simpan data pesanan ke tabel orders
         $order = new Order();
         $order->fill([
-            'user_id' => $request->user()->id,
+            'user_id' => auth()->user()->id,
             'order_number' => 'ORD-' . strtoupper(Str::random(10)),
             'sub_total' => $subTotal,
-            'shipping_id' => $request->shipping_id,
             'total_amount' => $totalAmount,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -105,6 +102,14 @@ class OrderController extends Controller
             'payment_method' => $request->payment_method,
             'payment_status' => 'belum dibayar',
         ]);
+    
+        // Tentukan apakah pesanan memerlukan shipping_id atau pickup_date
+        if ($request->payment_method === 'transfer_bank') {
+            $order->shipping_id = $request->shipping_id;
+        } elseif ($request->payment_method === 'bayarditoko') {
+            $order->pickup_date = $request->pickup_date;
+        }
+    
         $order->save();
     
         // Simpan setiap item dari Cart ke tabel order_items
@@ -120,12 +125,35 @@ class OrderController extends Controller
             $orderItem->save();
         }
     
-        // Update Cart dengan order_id yang baru dibuat
-        Cart::where('user_id', auth()->user()->id)->where('order_id', null)->update(['order_id' => $order->id]);
+        // Kurangi stok produk
+        foreach ($cartItems as $cartItem) {
+            $product = $cartItem->product;
+            if ($product->stock >= $cartItem->quantity) {
+                $product->stock -= $cartItem->quantity;
+                $product->save();
+            } else {
+                return back()->with('error', 'Not enough stock for ' . $product->name);
+            }
+        }
     
-        request()->session()->flash('success', 'Your product successfully placed in order');
-        return redirect()->route('home');
+        // Hapus item dari Cart setelah checkout berhasil
+        Cart::where('user_id', auth()->user()->id)->where('order_id', null)->delete();
+    
+        return redirect()->route('home')->with('success', 'Your order has been placed successfully.');
     }
+    
+
+    public function handleBayarDiToko(Request $request, Order $order)
+{
+    $this->validate($request, [
+        'pickup_date' => 'required|date|after_or_equal:today',
+    ]);
+
+    $order->pickup_date = $request->pickup_date;
+    $order->payment_status = 'pending';
+    $order->save();
+}
+
     
     
     
