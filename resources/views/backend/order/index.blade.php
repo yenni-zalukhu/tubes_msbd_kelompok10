@@ -25,7 +25,7 @@
               <th>Order No.</th>
               <th>Name</th>
               <th>Email</th>
-              <th>Quantity</th>
+              {{-- <th>Quantity</th> --}}
               <th>Total Amount</th>
               <th>Payment Method</th>
               <th>Tanggal Ambil Barang</th>
@@ -40,7 +40,7 @@
               <th>Order No.</th>
               <th>Name</th>
               <th>Email</th>
-              <th>Quantity</th>
+              {{-- <th>Quantity</th> --}}
               <th>Total Amount</th>
               <th>Payment Method</th>
               <th>Tanggal Ambil Barang</th>
@@ -56,7 +56,7 @@
                     <td>{{$order->order_number}}</td>
                     <td>{{$order->first_name}} {{$order->last_name}}</td>
                     <td>{{$order->email}}</td>
-                    <td>{{$order->quantity}}</td>
+                    {{-- <td>{{$order->quantity}}</td> --}}
                     <td>Rp{{number_format($order->total_amount, 2)}}</td>
                     <td>
                         @if($order->payment_method == 'bayarditoko')
@@ -115,6 +115,25 @@
       div.dataTables_wrapper div.dataTables_paginate{
           display: none;
       }
+
+      /* Menjaga posisi search bar tetap terlihat */
+/* div.dataTables_wrapper div.dataTables_filter {
+    float: right;
+    z-index: 10; 
+    background-color: white; 
+    padding: 10px;
+    position: relative; 
+} */
+
+/* Mengatur lebar search bar */
+div.dataTables_wrapper div.dataTables_filter input {
+    width: 200px;
+    height: 35px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+}
+
 
         /* Styling untuk gambar kecil */
     .payment-proof {
@@ -195,14 +214,16 @@
   <!-- Page level custom scripts -->
   <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
   <script>
-      $('#order-dataTable').DataTable( {
-            "columnDefs":[
-                {
-                    "orderable":false,
-                    "targets":[9, 10]  // Disable sorting for the last two columns
-                }
-            ]
-        } );
+$('#order-dataTable').DataTable({
+    "autoWidth": false, // Mencegah penyesuaian otomatis lebar kolom
+    "responsive": true, // Membuat tabel lebih fleksibel
+    "columnDefs": [
+        {
+            "orderable": false,
+            "targets": [8, 9] // Nonaktifkan pengurutan di kolom terakhir
+        }
+    ]
+});
 
         // Sweet alert
         function deleteData(id){

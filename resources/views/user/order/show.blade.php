@@ -15,7 +15,7 @@
         <th>Order No.</th>
         <th>Name</th>
         <th>Email</th>
-        <th>Quantity</th>
+        {{-- <th>Quantity</th> --}}
         <th>Total Amount</th>
         <th>Status</th>
         <th>Action</th>
@@ -27,7 +27,7 @@
         <td>{{ $order->order_number }}</td>
         <td>{{ $order->first_name }} {{ $order->last_name }}</td>
         <td>{{ $order->email }}</td>
-        <td>{{ $order->quantity }}</td>
+        {{-- <td>{{ $order->quantity }}</td> --}}
         <td>Rp{{ number_format($order->total_amount, 2) }}</td>
         <td>
           @if($order->status == 'pending')
@@ -41,11 +41,9 @@
           @endif
         </td>
         <td>
-          <form method="POST" action="{{ route('order.destroy', [$order->id]) }}">
-            @csrf
-            @method('delete')
-            <button class="btn btn-danger btn-sm dltBtn" data-id={{ $order->id }} style="height:30px; width:30px; border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
-          </form>
+          <a href="{{ route('order.bank-transfer', $order->id) }}" class="btn btn-success btn-sm float-left ml-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="Upload Bukti Pembayaran" data-placement="bottom">
+            <i class="fas fa-upload"></i>
+        </a>
         </td>
       </tr>
     </tbody>
@@ -91,10 +89,10 @@
                 <td>Order Date</td>
                 <td> : {{ $order->created_at->format('D d M, Y') }} at {{ $order->created_at->format('g : i a') }}</td>
               </tr>
-              <tr>
+              {{-- <tr>
                 <td>Quantity</td>
                 <td> : {{ $order->quantity }}</td>
-              </tr>
+              </tr> --}}
               <tr>
                 <td>Order Status</td>
                 <td> : {{ $order->status }}</td>
@@ -123,7 +121,7 @@
         <!-- Remove shipping information -->
         <div class="col-lg-6 col-lx-4">
           <div class="shipping-info">
-            <h4 class="text-center pb-4">PICKUP INFORMATION</h4>
+            <h4 class="text-center pb-4">BUYER INFORMATION</h4>
             <table class="table">
               <tr>
                 <td>Full Name</td>

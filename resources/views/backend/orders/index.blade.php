@@ -25,7 +25,7 @@
               <th>Order No.</th>
               <th>Name</th>
               <th>Email</th>
-              <th>Quantity</th>
+              {{-- <th>Quantity</th> --}}
               <th>Total Amount</th>
               <th>Payment Method</th>
               <th>Tanggal Ambil Barang</th>
@@ -40,7 +40,7 @@
               <th>Order No.</th>
               <th>Name</th>
               <th>Email</th>
-              <th>Quantity</th>
+              {{-- <th>Quantity</th> --}}
               <th>Total Amount</th>
               <th>Payment Method</th>
               <th>Tanggal Ambil Barang</th>
@@ -56,7 +56,7 @@
                     <td>{{$order->order_number}}</td>
                     <td>{{$order->first_name}} {{$order->last_name}}</td>
                     <td>{{$order->email}}</td>
-                    <td>{{$order->quantity}}</td>
+                    {{-- <td>{{$order->quantity}}</td> --}}
                     <td>Rp{{number_format($order->total_amount, 2)}}</td>
                     <td>
                         @if($order->payment_method == 'bayarditoko')

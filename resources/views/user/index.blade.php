@@ -100,7 +100,7 @@
                 <th>Order No.</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Quantity</th>
+                {{-- <th>Quantity</th> --}}
                 <th>Total Amount</th>
                 <th>Status</th>
                 <th>Action</th>
@@ -112,7 +112,7 @@
                 <th>Order No.</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Quantity</th>
+                {{-- <th>Quantity</th> --}}
                 <th>Total Amount</th>
                 <th>Status</th>
                 <th>Action</th>
@@ -126,7 +126,7 @@
                       <td>{{$order->order_number}}</td>
                       <td>{{$order->first_name}} {{$order->last_name}}</td>
                       <td>{{$order->email}}</td>
-                      <td>{{$order->quantity}}</td>
+                      {{-- <td>{{$order->quantity}}</td> --}}
                       <td>Rp{{number_format($order->total_amount,2)}}</td>
                       <td>
                           @if($order->status=='pending')
@@ -143,13 +143,13 @@
                         <a href="{{ route('user.order.show', $order->id) }}" class="btn btn-warning btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="View" data-placement="bottom">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <form method="POST" action="{{ route('user.order.delete', [$order->id]) }}">
+                        {{-- <form method="POST" action="{{ route('user.order.delete', [$order->id]) }}">
                             @csrf 
                             @method('delete')
                             <button class="btn btn-danger btn-sm dltBtn" data-id={{ $order->id }} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
-                        </form>
+                        </form> --}}
                         <!-- Button Baru -->
                         <a href="{{ route('order.bank-transfer', $order->id) }}" class="btn btn-success btn-sm float-left ml-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="Upload Bukti Pembayaran" data-placement="bottom">
                             <i class="fas fa-upload"></i>

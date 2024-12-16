@@ -203,7 +203,7 @@ class FrontendController extends Controller
         $products=Product::orwhere('title','like','%'.$request->search.'%')
                     ->orwhere('slug','like','%'.$request->search.'%')
                     ->orwhere('description','like','%'.$request->search.'%')
-                    ->orwhere('summary','like','%'.$request->search.'%')
+                    // ->orwhere('summary','like','%'.$request->search.'%')
                     ->orwhere('price','like','%'.$request->search.'%')
                     ->orderBy('id','DESC')
                     ->paginate('9');

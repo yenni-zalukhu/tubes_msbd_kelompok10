@@ -151,10 +151,10 @@
 												<label>Show :</label>
 												<select class="show" name="show" onchange="this.form.submit();">
 													<option value="">Default</option>
+													<option value="6" @if(!empty($_GET['show']) && $_GET['show']=='6') selected @endif>06</option>
 													<option value="9" @if(!empty($_GET['show']) && $_GET['show']=='9') selected @endif>09</option>
+													<option value="12" @if(!empty($_GET['show']) && $_GET['show']=='12') selected @endif>12</option>
 													<option value="15" @if(!empty($_GET['show']) && $_GET['show']=='15') selected @endif>15</option>
-													<option value="21" @if(!empty($_GET['show']) && $_GET['show']=='21') selected @endif>21</option>
-													<option value="30" @if(!empty($_GET['show']) && $_GET['show']=='30') selected @endif>30</option>
 												</select>
 											</div>
 											<div class="single-shorter">
@@ -348,9 +348,9 @@
 														<a href="{{route('add-to-wishlist',$product->slug)}}" class="btn min"><i class="ti-heart"></i></a>
 													</div>
 												</form>
-												<div class="default-social">
-												<!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->
-												</div>
+												{{-- <div class="default-social"> --}}
+												{{-- <!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons"></div><!-- ShareThis END --> --}}
+												{{-- </div> --}}
 											</div>
 										</div>
 									</div>

@@ -3,8 +3,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-git 
-            <span>Copyright &copy; Kelompok 5 MSBD Kom C</a> {{date('Y')}}</span>
+            <span>Copyright &copy; Kelompok 10 MSBD KOM C 2023</a> {{date('Y')}}</span>
 
           </div>
         </div>
