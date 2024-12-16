@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
+use App\Models\ViewDiscountedProduct;
+use Illuminate\Support\Facades\DB;  
 
 use Illuminate\Support\Str;
 
@@ -18,12 +20,116 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products=Product::getAllProduct();
-        // return $products;
-        return view('backend.product.index')->with('products',$products);
+        // Memanggil fungsi CountActiveProducts dari database
+        $activeProductCount = DB::select('SELECT CountActiveProducts() AS active_product_count')[0]->active_product_count ?? 0;
 
-        
+        // Ambil produk dari database
+        $products = Product::paginate(10);
+
+        // Kirimkan data ke view
+        return view('backend.product.index', compact('products', 'activeProductCount'));
     }
+
+    public function getStockByCategory(Request $request)
+    {
+        // Ambil kategori untuk dropdown
+        $categories = Category::where('status', 'active')->orderBy('title', 'ASC')->get();
+    
+        // Ambil ID kategori dari request atau set default NULL
+        $category_id = $request->input('category_id') ?? null;
+    
+        // Inisialisasi hasil produk kosong
+        $products = [];
+    
+        if ($category_id) {
+            // Eksekusi stored procedure jika kategori dipilih
+            $products = \DB::select('CALL get_stock_by_category(?)', [$category_id]);
+        }
+    
+        // Kirimkan $categories dan $products ke view
+        return view('backend.product.stock', [
+            'categories' => $categories,
+            'products' => $products,
+            'categoryId' => $category_id
+        ]);
+    }
+    
+
+    public function discountedProducts()
+    {
+        // Ambil data dari view 'view_discounted_products' dengan pagination
+        $discountedProducts = ViewDiscountedProduct::orderBy('discounted_price', 'ASC')->paginate(10);
+    
+        // Kirim data ke view
+        return view('backend.product.discounted-products', compact('discountedProducts'));
+    }
+    
+    
+
+    
+    
+
+    public function getStockByCategoryForm()
+    {
+        // Mengambil semua kategori dari model Category
+        $categories = Category::where('status', 'active')->orderBy('title', 'ASC')->get();
+    
+        // Kirimkan default null untuk categoryId
+        return view('backend.product.stock', [
+            'categories' => $categories,
+            'categoryId' => null
+        ]);
+    }
+    
+    
+    public function getBestSellingProducts()
+    {
+        // Panggil stored procedure menggunakan DB::select
+        $bestSellingProducts = DB::select('CALL get_best_selling_products()');
+
+        // Kirim data ke view
+        return view('backend.product.best-selling', compact('bestSellingProducts'));
+    }
+
+    public function getDiscountedPrice($productId)
+{
+    $product = Product::find($productId);
+    
+    if ($product) {
+        // Panggil fungsi stored di database
+        $discountedPrice = DB::select('SELECT calculate_discounted_price(?, ?) AS discounted_price', [
+            $product->price,
+            $product->discount
+        ]);
+        
+        // Kembalikan hasil
+        return response()->json([
+            'original_price' => $product->price,
+            'discount' => $product->discount,
+            'discounted_price' => $discountedPrice[0]->discounted_price ?? 0
+        ]);
+    }
+    
+    return response()->json(['error' => 'Product not found'], 404);
+}
+
+public function getActiveProductCount()
+{
+    // Menjalankan stored function CountActiveProducts
+    $result = DB::select('SELECT CountActiveProducts() AS active_product_count');
+
+    // Menyimpan hasil ke dalam variabel
+    $activeProductCount = $result[0]->active_product_count ?? 0;
+
+    // Mengembalikan hasil ke view
+    return view('backend.product.index', compact('activeProductCount'));
+}
+
+
+
+    
+    
+
 
     /**
      * Show the form for creating a new resource.

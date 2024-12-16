@@ -30,10 +30,14 @@
 							{{-- @php
 								$settings=DB::table('settings')->get();
 							@endphp --}}
-							<h3>Selamat Datang di <span>Anisa Collection Store</span></h3>
+							<h3 style="line-height: 1.5; margin-top: 130px;">
+								Selamat Datang di <span style="display: block;">Anisa Collection Store</span>
+							  </h3>
+							  
+							  
 							{{-- <p>@foreach($settings as $data) {{$data->description}} @endforeach</p> --}}
 							<div class="button">
-								<a href="{{route('blog')}}" class="btn">Our Blog</a>
+								{{-- <a href="{{route('blog')}}" class="btn">Our Blog</a> --}}
 								<a href="{{route('contact')}}" class="btn primary">Contact Us</a>
 							</div>
 						</div>
@@ -43,7 +47,7 @@
 							{{-- <div class="button">
 								<a href="https://www.youtube.com/watch?v=nh2aYrGMrIE" class="video video-popup mfp-iframe"><i class="fa fa-play"></i></a>
 							</div> --}}
-							<img src="backend/img/logo.png" alt="..." class="img-fluid">
+							<img src="backend/img/logo1_anisa.png" alt="..." class="img-fluid">
 						</div>
 					</div>
 				</div>
@@ -53,7 +57,7 @@
 
 
 	<!-- Start Shop Services Area  -->
-<section class="shop-services section home">
+{{-- <section class="shop-services section home">
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-6 col-12">
@@ -94,8 +98,8 @@
 				</div>
 			</div>
 		</div>
-	</section>
+	</section> --}}
 	<!-- End Shop Services Area -->
 
-	@include('frontend.layouts.newsletter')
+	{{-- @include('frontend.layouts.newsletter')	 --}}
 @endsection

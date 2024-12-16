@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cart;
+use App\Models\VOrdersPickup;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Shipping;
+use App\Models\ViewSalesSummary;
 use App\User;
 use PDF;
 use Notification;
@@ -141,6 +143,17 @@ class OrderController extends Controller
     
         return redirect()->route('home')->with('success', 'Your order has been placed successfully.');
     }
+
+
+
+    public function pickupOrders()
+    {
+        // Ambil data dari view v_orders_pickup
+        $orders = VOrdersPickup::orderBy('pickup_date', 'asc')->get();
+
+        // Kirim data ke pickup.blade.php
+        return view('backend.orders.pickup', compact('orders'));
+    }
     
 
     public function handleBayarDiToko(Request $request, Order $order)
@@ -186,6 +199,43 @@ class OrderController extends Controller
     
         return back()->with('error', 'Gagal mengunggah bukti pembayaran.');
     }
+
+
+    public function totalPendapatan(Request $request)
+    {
+        // Default tanggal jika tidak diinput
+        $start_date = $request->input('start_date', date('Y-m-01'));
+        $end_date = $request->input('end_date', date('Y-m-d'));
+    
+        // Panggil stored function untuk menghitung total pendapatan
+        $totalIncome = \DB::selectOne("SELECT total_income_in_period(?, ?) AS total_income", [$start_date, $end_date]);
+        $income = $totalIncome->total_income ?? 0;
+    
+        // Filter orders berdasarkan kriteria
+        $orders = Order::where('status', 'finished')
+                       ->where('payment_status', 'sudah dibayar')
+                       ->whereBetween('created_at', [$start_date, $end_date])
+                       ->orderBy('id', 'DESC')
+                       ->paginate(10);
+    
+        // Return data ke view
+        return view('kasir.total_pendapatan', compact('orders', 'income', 'start_date', 'end_date'));
+    }
+    
+
+
+
+public function salesSummary()
+{
+    // Ambil data dari model ViewSalesSummary
+    $salesSummary = ViewSalesSummary::orderBy('total_sold', 'DESC')->get();
+
+    // Kirim data ke view
+    return view('kasir.sales_summary', compact('salesSummary'));
+}
+
+
+
     /**
      * Display the specified resource.
      *
@@ -210,6 +260,7 @@ class OrderController extends Controller
     }
     
     
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -232,29 +283,41 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $order=Order::find($id);
-        $this->validate($request,[
-            'status'=>'required|in:pending,process,finished,cancel'
+        $order = Order::find($id);
+    
+        // Validasi input
+        $this->validate($request, [
+            'status' => 'required|in:pending,process,finished,cancel'
         ]);
-        $data=$request->all();
-        // return $request->status;
-        if($request->status=='finished'){
-            foreach($order->cart as $cart){
-                $product=$cart->product;
-                // return $product;
-                $product->stock -=$cart->quantity;
+    
+        $data = $request->all();
+    
+        // Jika status diubah menjadi 'finished', stok dikurangi
+        if ($request->status == 'finished') {
+            foreach ($order->orderItems as $item) {
+                $product = $item->product;
+                $product->stock -= $item->quantity;
                 $product->save();
             }
         }
-        $status=$order->fill($data)->save();
-        if($status){
-            request()->session()->flash('success','Successfully updated order');
+    
+        // Jika status diubah menjadi 'cancel', panggil stored procedure untuk mengembalikan stok
+        if ($request->status == 'cancel') {
+            \DB::statement('CALL restore_stock_on_cancel(?)', [$order->id]);
         }
-        else{
-            request()->session()->flash('error','Error while updating order');
+    
+        // Update status order
+        $status = $order->fill($data)->save();
+    
+        if ($status) {
+            request()->session()->flash('success', 'Successfully updated order');
+        } else {
+            request()->session()->flash('error', 'Error while updating order');
         }
+    
         return redirect()->route('order.index');
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -363,6 +426,9 @@ class OrderController extends Controller
         }
         return $data;
     }
+
+
+
 
 
 }

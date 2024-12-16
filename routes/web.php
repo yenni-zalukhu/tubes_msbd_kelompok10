@@ -20,6 +20,14 @@ use App\Http\Middleware\Kasir;
 use \UniSharp\LaravelFilemanager\Lfm;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\PaymentStatusController;
+use App\Http\Controllers\ProductController;
+
+
+
+
+
+
 
 
 
@@ -148,6 +156,17 @@ Route::post('/order/verify-payment/{id}', [OrderController::class, 'verifyPaymen
 
 
 Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function () {
+    Route::get('/products', [ProductController::class, 'index'])->name('product.index');
+    Route::get('/product/stock/{categoryId}', [ProductController::class, 'getStockByCategory'])->name('product.stock');
+    Route::get('/best-selling-products', [ProductController::class, 'getBestSellingProducts'])->name('products.best-selling');
+    Route::get('/active-products-count', [ProductController::class, 'getActiveProductCount'])->name('active.product.count');
+    Route::get('/admin/discounted-products', [ProductController::class, 'discountedProducts'])
+    ->name('admin.discounted-products');
+
+    
+Route::get('/product/stock', [ProductController::class, 'getStockByCategoryForm'])->name('product.stock.form');
+Route::post('/product/stock', [ProductController::class, 'getStockByCategory'])->name('product.stock');
+
     Route::get('/', [AdminController::class, 'index'])->name('admin');
     Route::get('/file-manager', function () {
         return view('backend.layouts.file-manager');
@@ -200,6 +219,10 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
 
     // User section start
         Route::group(['prefix' => '/user', 'middleware' => ['user']], function () {
+            // Route::get('/product/{id}/discounted-price', [ProductController::class, 'getDiscountedPrice'])->name('product.discounted_price');
+            // Route::get('/product/discount/{id}', [ProductController::class, 'calculateDiscountAmount'])->name('product.discount');
+
+
             Route::get('/', [HomeController::class, 'index'])->name('user');
             // Profile
             Route::get('/profile', [HomeController::class, 'profile'])->name('user-profile');
@@ -230,35 +253,36 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
 
 
 
-    //   Route::get('/kasir', [FrontendController::class, 'indexk']);
-    Route::group(['prefix' => '/kasir', 'middleware' => ['kasir']], function () {
-        Route::get('/', [KasirController::class, 'index'])->name('kasir');
-        Route::get('/file-manager', function () {
-            return view('backend.layouts.file-manager');
-        })->name('file-manager');
+       Route::group(['prefix' => '/kasir', 'middleware' => ['kasir']], function () {
+    Route::get('/orders/pickup', [OrderController::class, 'pickupOrders'])->name('orders.pickup');
+    Route::get('/payment-status', [PaymentStatusController::class, 'index'])->name('payment.status.view');
+    Route::get('/kasir/total-pendapatan', [OrderController::class, 'totalPendapatan'])->name('kasir.total_pendapatan');
+    Route::get('/sales-summary', [OrderController::class, 'salesSummary'])->name('kasir.sales_summary');
 
-      
+            Route::get('/', [KasirController::class, 'index'])->name('kasir');
+            Route::get('/file-manager', function () {
+                return view('backend.layouts.file-manager');
+            })->name('file-manager');
+        
+            // Transaction untuk kasir
+            Route::post('/transaction/store', [TransactionController::class, 'store'])->name('transaction.store');
+            Route::get('/transactions', [TransactionController::class, 'index'])->name('transaction.index');
+            Route::get('/transaction/{id}', [TransactionController::class, 'show'])->name('transaction.show');
+        
+            // Order
+            Route::resource('/order', 'OrderController');
+            
+            // Order offline
+            Route::resource('/orders', 'OrderOfflineController');
+            Route::get('/orders/pdf/{id}', [OrderOfflineController::class, 'pdf'])->name('orders.pdf');
+        
+            // Pickup Orders
+            // Route::get('/orders/pickup', [OrderController::class, 'pickupOrders'])->name('orders.pickup');
 
-        //Transaction untuk kasir
-        Route::post('/transaction/store', [TransactionController::class, 'store'])->name('transaction.store');
-        Route::get('/transactions', [TransactionController::class, 'index'])->name('transaction.index'); //ika kamu ingin menampilkan daftar transaksi di halaman lain,
-        Route::get('/kasir/category', [TransactionController::class, 'transaction']);
-        // Route::resource('transaction', CategoryController::class);
-        // Route::resource('transaction', TransactionController::class);
-        // Route::get('transaction/{id}', [TransactionController::class, 'show'])->name('transaction.show');
-
-    Route::post('/transaction/store', [TransactionController::class, 'store'])->name('transaction.store');
-    Route::get('/transactions', [TransactionController::class, 'index'])->name('transaction.index');
-    Route::get('/transaction/{id}', [TransactionController::class, 'show'])->name('transaction.show');
 
 
-      // Order
-      Route::resource('/order', 'OrderController');
+  
 
-      //order offline
-      Route::resource('/orders', 'OrderOfflineController');
-
-      Route::get('/orders/pdf/{id}', [OrderOfflineController::class, 'pdf'])->name('orders.pdf');
 
       // Shipping
     //   Route::resource('/shipping', 'ShippingController');

@@ -139,6 +139,32 @@
               </div>
           </li>
 
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('product.stock', ['categoryId' => 1]) }}">
+                <i class="fas fa-box"></i>
+                <span>Product Stock</span>
+            </a>
+        </li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('products.best-selling') }}">
+                <i class="fas fa-chart-line"></i>
+                <span>Best Selling Products</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.discounted-products') }}">
+                <i class="fas fa-tags"></i>
+                <span>Discounted Products</span>
+            </a>
+        </li>
+        
+        
+        
+        
+
           <!--Orders -->
           {{-- <li class="nav-item">
               <a class="nav-link" href="{{ route('order.index') }}">
@@ -277,6 +303,37 @@
                     <a class="collapse-item" href="{{ route('orders.create') }}">Add Orders</a>                </div>
             </div>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('orders.pickup') }}">
+                <i class="fas fa-box"></i>
+                <span>Pickup Orders</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('payment.status.view') }}">
+                <i class="fas fa-money-check-alt"></i>
+                <span>Payment Status</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('kasir.total_pendapatan') }}">
+                <i class="fas fa-chart-line"></i>
+                <span>Total Pendapatan</span>
+            </a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('kasir.sales_summary') }}">
+                <i class="fas fa-chart-bar"></i>
+                <span>Sales Summary</span>
+            </a>
+        </li>
+        
+        
+        
 
           {{-- <li class="nav-item">
               <a class="nav-link" href="{{ route('order.index') }}">

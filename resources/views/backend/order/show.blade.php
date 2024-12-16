@@ -67,10 +67,17 @@
                 <td>Products</td>
                 <td>: 
                     @foreach ($order->orderItems as $item)
-                        {{ $item->product->title ?? 'Product not found' }} (Qty: {{ $item->quantity }})<br>
+                        {{ $item->product->title ?? 'Product not found' }} 
+                        (Qty: {{ $item->quantity }})<br>
+                        {{-- @if($item->product->discount > 0)
+                            <small>Diskon: Rp{{ number_format($item->discount_amount, 2) }}</small><br>
+                            <small>Harga Setelah Diskon: Rp{{ number_format($item->final_price, 2) }}</small>
+                        @endif --}}
                     @endforeach
                 </td>
             </tr>
+            
+            
             
             
             

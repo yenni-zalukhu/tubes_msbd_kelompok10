@@ -104,13 +104,13 @@
 						<div class="row">
 							<div class="col-lg-8 col-md-5 col-12">
 								<div class="left">
-									<div class="coupon">
+									{{-- <div class="coupon">
 									<form action="{{route('coupon-store')}}" method="POST">
 											@csrf
 											<input name="code" placeholder="Enter Your Coupon">
 											<button class="btn">Pakai</button>
 										</form>
-									</div>
+									</div> --}}
 									{{-- <div class="checkbox">`
 										@php
 											$shipping=DB::table('shippings')->where('status','active')->limit(1)->get();
