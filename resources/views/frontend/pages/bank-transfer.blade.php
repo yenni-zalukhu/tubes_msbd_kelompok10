@@ -33,17 +33,17 @@
                                 <div class="list-group-item d-flex justify-content-between align-items-center">
                                     <h6>Bank BRI</h6>
                                     <p class="mb-0">No. Rek: 1234-5678-9012-3456</p>
-                                    <p class="text-muted mb-0">A.N: Nama Toko</p>
+                                    <p class="text-muted mb-0">A.N: Anisa Collection Store</p>
                                 </div>
                                 <div class="list-group-item d-flex justify-content-between align-items-center">
                                     <h6>Bank BNI</h6>
                                     <p class="mb-0">No. Rek: 9876-5432-1098-7654</p>
-                                    <p class="text-muted mb-0">A.N: Nama Toko</p>
+                                    <p class="text-muted mb-0">A.N: Anisa Collection Store</p>
                                 </div>
                                 <div class="list-group-item d-flex justify-content-between align-items-center">
                                     <h6>Bank BCA</h6>
                                     <p class="mb-0">No. Rek: 4567-8901-2345-6789</p>
-                                    <p class="text-muted mb-0">A.N: Nama Toko</p>
+                                    <p class="text-muted mb-0">A.N: Anisa Collection Store  </p>
                                 </div>
                             </div>
                             

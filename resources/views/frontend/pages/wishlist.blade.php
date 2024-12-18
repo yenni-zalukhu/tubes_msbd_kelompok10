@@ -46,7 +46,7 @@
 											<p class="product-name"><a href="{{route('product-detail',$wishlist->product['slug'])}}">{{$wishlist->product['title']}}</a></p>
 											<p class="product-des">{!!($wishlist['summary']) !!}</p>
 										</td>
-										<td class="total-amount" data-title="Total"><span>${{$wishlist['amount']}}</span></td>
+										<td class="total-amount" data-title="Total"><span>Rp{{$wishlist['amount']}}</span></td>
 										<td><a href="{{route('add-to-cart',$wishlist->product['slug'])}}" class='btn text-white'>Add To Cart</a></td>
 										<td class="action" data-title="Remove"><a href="{{route('wishlist-delete',$wishlist->id)}}"><i class="ti-trash remove-icon"></i></a></td>
 									</tr>
@@ -166,7 +166,7 @@
                                             <span><i class="fa fa-check-circle-o"></i> in stock</span>
                                         </div>
                                     </div>
-                                    <h3>$29.00</h3>
+                                    <h3>Rp29.00</h3>
                                     <div class="quickview-peragraph">
                                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui nemo ipsum numquam.</p>
                                     </div>
