@@ -412,7 +412,7 @@
                                     <span><i class="fa fa-check-circle-o"></i> in stock</span>
                                 </div>
                             </div>
-                            <h3>$29.00</h3>
+                            <h3>Rp29.00</h3>
                             <div class="quickview-peragraph">
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui nemo ipsum numquam.</p>
                             </div>

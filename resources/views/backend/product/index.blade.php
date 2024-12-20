@@ -69,7 +69,7 @@
                     <td>
                         {{ $sub_cat_info->title ?? 'N/A' }}
                     </td>
-                    <td>Rs. {{ number_format($product->price, 2) }} /-</td>
+                    <td>Rp. {{ number_format($product->price, 2) }} /-</td>
                     <td>{{ $product->discount }}% OFF</td>
                     <td>{{ $product->size }}</td>
                     <td>{{ $product->condition }}</td>

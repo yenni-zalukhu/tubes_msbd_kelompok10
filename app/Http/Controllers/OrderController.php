@@ -401,31 +401,43 @@ public function salesSummary()
     
     
     // Income chart
-    public function incomeChart(Request $request){
-        $year=\Carbon\Carbon::now()->year;
-        // dd($year);
-        $items=Order::with(['cart_info'])->whereYear('created_at',$year)->where('status','finished')->get()
-            ->groupBy(function($d){
-                return \Carbon\Carbon::parse($d->created_at)->format('m');
+    public function incomeChart(Request $request)
+    {
+        // Mendapatkan tahun yang sedang dipilih, default adalah tahun sekarang
+        $year = $request->input('year', \Carbon\Carbon::now()->year);
+    
+        // Mengambil semua orders dengan status finished untuk tahun yang dipilih
+        $orders = Order::whereYear('created_at', $year)
+            ->where('status', 'finished')
+            ->get()
+            ->groupBy(function ($order) {
+                // Kelompokkan berdasarkan bulan dalam format angka (01, 02, ...)
+                return \Carbon\Carbon::parse($order->created_at)->format('m');
             });
-            // dd($items);
-        $result=[];
-        foreach($items as $month=>$item_collections){
-            foreach($item_collections as $item){
-                $amount=$item->cart_info->sum('amount');
-                // dd($amount);
-                $m=intval($month);
-                // return $m;
-                isset($result[$m]) ? $result[$m] += $amount :$result[$m]=$amount;
-            }
+    
+        $result = [];
+    
+        // Menghitung total pendapatan per bulan
+        foreach ($orders as $month => $orderCollection) {
+            $totalAmount = $orderCollection->sum(function ($order) {
+                // Pastikan kolom total_amount berisi total pendapatan dari order
+                return $order->total_amount;
+            });
+    
+            $monthIndex = intval($month); // Konversi bulan ke integer
+            $result[$monthIndex] = $totalAmount;
         }
-        $data=[];
-        for($i=1; $i <=12; $i++){
-            $monthName=date('F', mktime(0,0,0,$i,1));
-            $data[$monthName] = (!empty($result[$i]))? number_format((float)($result[$i]), 2, '.', '') : 0.0;
+    
+        // Format data untuk setiap bulan (Jan - Dec), isi dengan 0 jika tidak ada data
+        $data = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $monthName = date('F', mktime(0, 0, 0, $i, 1)); // Nama bulan
+            $data[$monthName] = isset($result[$i]) ? number_format((float) $result[$i], 2, '.', '') : 0.0;
         }
-        return $data;
+    
+        return response()->json($data); // Mengembalikan data dalam format JSON
     }
+    
 
 
 
